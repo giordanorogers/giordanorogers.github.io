@@ -1,0 +1,5 @@
+When someone says something to another, how do we determine whether it is true?
+What does truth mean in this case?
+Must we not define empirically either what is being said, or perhaps the treat it like a multi-dimensional subspace within the space of all possible meanings?
+Unless we are able to discern what is being stated -- which is further complicated by the distinction between what is stated, what is intended, and what is truly experienced by the receiver at a level uncorrupted by the noise (there is a difference between what is being pointed to by an intention, and what is intended to be expressed about that thing being pointed to, whether it is an emtoion, a thought, etc.) -- then we'll have to regard truth as a region within an ambient space of interpretable meanings of a statement.
+ 
