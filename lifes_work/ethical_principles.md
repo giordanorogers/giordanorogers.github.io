@@ -13,4 +13,3 @@ Axiom 3: Consciousness is self-reflexive attention; A being is conscious if and 
 Axiom 4: Choice is the intentional selection of an action from a projected distribution of available/possible future actions.
 Theorem 3: Good choice is deontological; If a conscious being selects the action with the most optimal well-being to suffering ratio from its perceived available actions, it made the best (most good) choice it could make.
 Theorem 4: Right choice is utilitarian; If a conscious being selects the action which results in the most optimal well-being to suffering ratio for all conscious beings affected, it made the right choice.
-gi
