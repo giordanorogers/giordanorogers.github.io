@@ -1,12 +1,9 @@
 /* quotes.css */
 body {
-    font-family: 'JetBrains Mono', monospace;
-    background: #000;
-    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    background: #f9f9f9;
+    color: #333;
     line-height: 1.6;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
 }
 
 header {
@@ -17,17 +14,16 @@ header {
 }
 
 article {
-    max-width: 100%;
-    margin: 2rem 0;
-    background: transparent;
-    padding: 0;
-    box-shadow: none;
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 article h1 {
-    font-size: 1.5rem;
-    color: #fff;
-    margin-bottom: 1rem;
+    font-size: 28px;
+    color: #333;
 }
 
 article h3 {
@@ -50,9 +46,8 @@ article h4 {
 }
 
 article p {
-    text-align: left;
-    margin-bottom: 1rem;
-    font-size: 1rem;
+    text-align: justify;
+    margin-bottom: 20px;
 }
 
 article em {
@@ -75,14 +70,4 @@ footer {
         width: 90%;
         padding: 15px;
     }
-}
-
-a {
-    color: #fff;
-    text-decoration: none;
-    border-bottom: 1px solid #fff;
-}
-
-a:hover {
-    border-bottom: none;
 }
