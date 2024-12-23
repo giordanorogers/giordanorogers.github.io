@@ -1,3 +1,7 @@
+"""
+This script generates an html file from a markdown file.
+"""
+
 import os
 import markdown
 
