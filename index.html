@@ -8,13 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="styles.css" rel="stylesheet" type="text/css">
     <link href="images/favicon.ico" rel="shortcut icon">
-    <!-- <link href="https://antirez.com/rss" rel="alternate" type="application/rss+xml"> -->
     <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
-    <!-- <script src="https://antirez.com/js/jquery.1.6.4.min.js"></script> -->
-    <!-- <script src="https://antirez.com/js/app.js?v=10"></script> -->
 </head>
 
 <body>
+    <div class="sidebar">
+        <a href="index.html" class="sidebar-button">Home</a>
+        <a href="about.html" class="sidebar-button">About</a>
+        <img src="images/davinci-wing.jpg" alt="Leonardo da Vinci's Wing Design" class="sidebar-image" title="Leonardo da Vinci's Wing Design">
+        <div class="sidebar-quote japanese">
+            "機械を設計する者たち——どれほど自分の行為が善だと信じていても、時の風はやがて彼らを産業文明の道具に変えてしまう。<br>決して無傷では済まない。<br>それは呪われた夢なのだ。"
+        </div>
+    </div>
     <div id="container">
         <header>
             <h1><a href="https://giordanorogers.github.io">Giordano Rogers</a></h1>
@@ -24,57 +29,43 @@
         <div id="content">
             <section id="newslist">
                 <article data-news-id="1">
-                    <h2><a href="blogs/1.html">The first post</a></h2>
+                    <h2><a href="blogs/personal_semantic_embeddings.html">Personal Semantic Embeddings</a></h2>
                     <address></address>
                     <small><a href="0#down" class="downarrow disabled">&#9660;</a></small>
                     <topcomment>
                         <article class="comment" style="margin-left:0px" data-comment-id="1-" id="1-">
                             <span class="info">
-                                20th December 2024
+                                29th September 2024
                             </span>
-                            <pre>Charging. Please wait...</pre>
+                            <pre>Thoughts on bridging interpersonal semantic gaps via fine-tuned embedding spaces.</pre>
                         </article>
                         <div class="readmore">
-                            <i><a href="blogs/1.html">read the full post at http://giordanorogers.github.io/blogs/1.html</a></i>
+                            <i><a href="blogs/personal_semantic_embeddings.html">read the full post at http://giordanorogers.github.io/blogs/personal_semantic_embeddings.html</a></i>
                         </div>
                     </topcomment>
                 </article>
-                <!--<article data-news-id="143">
-                    <h2><a href="https://antirez.com/news/143">Playing audio files in a Pi Pico without a DAC</a></h2>
+                
+                <article data-news-id="2">
+                    <h2><a href="blogs/algorithms_are_manipulating_you.html">Algorithms are Manipulating You</a></h2>
                     <address></address>
                     <small><a href="0#down" class="downarrow disabled">&#9660;</a></small>
                     <topcomment>
-                        <article class="comment" style="margin-left:0px" data-comment-id="143-" id="143-">
-                            <span class="info"><span class="username"><a href="https://antirez.com/user/antirez">antirez</a></span> 289 days ago.</span>
-                            <pre>The Raspberry Pico is suddenly becoming my preferred chip for embedded development. It is well made, durable hardware, with a ton of features that appear designed with smartness and passion (the state machines driving the GPIOs are a killer feature!). Its main weakness, the lack of connectivity, is now resolved by the W variant. The data sheet is excellent and documents every aspect of the chip. Moreover, it is well supported by MicroPython (which I’m using a lot), and the C SDK environment is decent, even if full of useless complexities like today fashion demands: a cmake build system that in turn generates a Makefile, files to define this and that (used libraries, debug outputs, …), and in general a huge overkill for the goal of compiling tiny programs for tiny devices. No, it’s worse than that: all this complexity to generate programs for a FIXED hardware with a fixed set of features (if not for the W / non-W variant). Enough with the rant about how much today software sucks, but it must be remembered.</pre>
+                        <article class="comment" style="margin-left:0px" data-comment-id="2-" id="2-">
+                            <span class="info">
+                                1st December 2023
+                            </span>
+                            <pre>An exploration of recommender systems, their impact on society, and the need for decentralized data.</pre>
                         </article>
                         <div class="readmore">
-                            <i><a href="http://antirez.com/news/143">read the full post at http://antirez.com/news/143</a></i>
+                            <i><a href="blogs/algorithms_are_manipulating_you.html">read the full post at http://giordanorogers.github.io/blogs/algorithms_are_manipulating_you.html</a></i>
                         </div>
                     </topcomment>
                 </article>
-                <article data-news-id="142">
-                    <h2><a href="https://antirez.com/news/142">First Token Cutoff LLM sampling</a></h2>
-                    <address></address>
-                    <small><a href="0#down" class="downarrow disabled">&#9660;</a></small>
-                    <topcomment>
-                        <article class="comment" style="margin-left:0px" data-comment-id="142-" id="142-">
-                            <span class="info"><span class="username"><a href="https://antirez.com/user/antirez">antirez</a></span> 342 days ago.</span>
-                            <pre>From a theoretical standpoint, the best reply provided by an LLM is obtained by always picking the token associated with the highest probability. This approach makes the LLM output deterministic, which is not a good property for a number of applications. For this reason, in order to balance LLMs creativity while preserving adherence to the context, different sampling algorithms have been proposed in recent years.
-
-Today one of the most used ones, more or less the default, is called top-p: it is a form of nucleus sampling where top-scoring tokens are collected up to a total probability sum of “p”, then random weighted sampling is performed.</pre>
-                        </article>
-                        <div class="readmore">
-                            <i><a href="http://antirez.com/news/142">read the full post at http://antirez.com/news/142</a></i>
-                        </div>
-                    </topcomment>
-                </article>-->
             </section>
         </div>
         <footer>
-            <!--<a href="https://antirez.com/rss">rss feed</a> | -->
+            <a href="giordanopaulrogers@gmail.com">email</a> |
             <a href="https://www.youtube.com/@giordanorogers">youtube</a> | 
-            <!--<a href="https://www.instagram.com/giordanorogers/">instagram</a> | -->
             <a href="https://www.linkedin.com/in/giorogers/">linkedin</a>
         </footer>
     </div>

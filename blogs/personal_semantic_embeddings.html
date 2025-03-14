@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>The first post - Giordano Rogers</title>
+    <meta content="index" name="robots">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../styles.css" rel="stylesheet" type="text/css">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+    <!-- Add Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Styling for Markdown content */
+        .markdown-body {
+            font-family: 'Palatino', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+        }
+        
+        .markdown-body h1, 
+        .markdown-body h2, 
+        .markdown-body h3, 
+        .markdown-body h4, 
+        .markdown-body h5, 
+        .markdown-body h6 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: bold;
+            line-height: 1.25;
+        }
+        
+        .markdown-body h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+        
+        .markdown-body p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body blockquote {
+            padding: 0.5em 1em;
+            color: #555;
+            border-left: 0.25em solid #666;
+            margin: 0 0 24px 0;
+            font-style: italic;
+            background-color: #f5f1e5;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .markdown-body blockquote p {
+            margin-bottom: 8px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        
+        .markdown-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .markdown-body a {
+            color: #666;
+            text-decoration: underline;
+        }
+        
+        .markdown-body a:hover {
+            color: #333;
+        }
+        
+        .markdown-body code {
+            font-family: 'Inconsolata', monospace;
+            background-color: #f2ede0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        /* Styling for references/citations */
+        .markdown-body sup {
+            font-size: 0.75em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            top: -0.5em;
+        }
+        
+        .markdown-body sup a {
+            color: #6a4c93;
+            text-decoration: none;
+            padding: 0 2px;
+            font-weight: bold;
+        }
+        
+        .markdown-body sup a:hover {
+            text-decoration: underline;
+            color: #4a347a;
+        }
+    </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="../index.html" class="sidebar-button">Home</a>
+    <a href="../about.html" class="sidebar-button">About</a>
+    <img src="../images/davinci-wing.jpg" alt="Leonardo da Vinci's Wing Design" class="sidebar-image" title="Leonardo da Vinci's Wing Design">
+    <div class="sidebar-quote japanese">
+        "機械を設計する者たち——どれほど自分の行為が善だと信じていても、時の風はやがて彼らを産業文明の道具に変えてしまう。<br>決して無傷では済まない。<br>それは呪われた夢なのだ。"
+    </div>
+  </div>
+  <div id="container">
+    <header>
+      <h1><a href="https://giordanorogers.github.io">Giordano Rogers</a></h1>
+      <nav></nav>
+      <nav id="account"></nav>
+    </header>
+    <div id="content">
+      <div id="essay-content" class="markdown-body"></div>
+      <script type="text/markdown" id="markdown-content">
+## Personal Semantic Embeddings
+
+*September 29, 2024*
+
+> "...he listened eagerly to the story of her life and she was equally eager to hear the story of his, but although they had a clear understanding of the logical meaning of the words they exchanged, they failed to hear the semantic murmurs of the river flowing through them."
+> 
+> — Milan Kundera, *The Unbearable Lightness of Being*
+
+My favorite exploration of conversational disconnect comes from a section of Milan Kundera's The Unbearable Lightness of Being. In this passage, he describes the semantic gap between two lovers—Franz and Sabina. Their experiences have led them each to make strong associations with words and concepts. And the differences in these associations drive their dialogue apart, as if they were speaking entirely different languages altogether. Like Kundera's lovers, we all accumulate experiences which individuate how we use language. We bind our words to our memories. Maybe for you the word "basketball" evokes memories of an NBA playoff run you enjoyed watching with friends. For another, it may evoke the shame of an air-balled free throw from his middle-school season, the reverberating slap of ball on vinyl court. These ingrained word associations give language its poetic flavor. But they are also baggage which clouds our understanding, and inhibits us from being fully understood.
+
+Many great thinkers have attempted to quantify and clarify the meaning of speech. Perspectives on this matter are divided. Some have argued that language can only be understood as a biological phenomenon. Others argue that trying to define meaning creates a never ending chain of questions. But recent advancements in large language models (LLMs) have called these arguments into question. Google Translate, Microsoft CoPilot, and ChatGPT are well-known names. And they all convert our seemingly nebulous word associations into good-old reliable math. LLMs analyze how often words appear together in text, converting each word into a long list of numbers—a vector—that places it in a high-dimensional space relative to other words. We call this space an embedding space<sup>[[1]](https://doi.org/10.48550/arXiv.1310.4546)</sup>. Converting words to numbers lets us do all kinds of interesting things like translate and generate coherent text and speech. As this technology has matured, we've seen massive adoption of language models for writing assistance. A 2023 survey found that 56% of college students reported using AI to assist in their coursework<sup>[[2]](https://www.bestcolleges.com/research/most-college-students-have-used-ai-survey/)</sup>. Emphasis on "reported". Considering that use of these tools is stigmatized, actual rates are likely higher.
+
+What's more is that, unlike what was previously thought to be the case with language, the word relations latent to these embedding spaces have arithmetic and geometric properties. In a famous study, a team of researchers found that by subtracting the vector for "man" from "king", one arrived at a vector most closely approximating that for "queen"<sup>[[3]](https://doi.org/10.48550/arXiv.1509.01692)</sup>. Since then, all kinds of interesting artifacts have been discovered in embedding spaces, such as representations of functional relationships like "x is the capital of y"<sup>[[4]](https://aclanthology.org/D17-1308/)</sup> and the ability to delete whole concepts from an embedding space while leaving the rest of the conceptual relations intact<sup>[[5]](https://doi.org/10.48550/arXiv.2308.14761)</sup>. This is significant because it highlights the underlying structure and regularity of meaning within language, suggesting that these spaces encode not just word associations but deeper conceptual relationships.
+
+But despite mass-adoption, there is still a critical issue with language models today – their text comes across as robotic. There's a generality-by-nature to the process by which these models are typically trained—i.e. processing terabytes of data from the worldwide web. This generality is ideal when training a language model to understand the semantics of common English. But by that same token the relations it learns are different from those of any particular human's vocabulary. Whereas human semantics all have various idiosyncrasies shaped by the unique and nuanced experiences of our lives, broad sampling of internet text leads to a model which lacks distinction—the very thing which gives language its humanity. In most respects this is desirable. Because it learns a maximally general representation of the language, prompting a language model to behave in a certain way can evoke more specialized behavior. Meanwhile the underlying embedding space remains the same.
+
+But the process of fine-tuning lets us augment these embedding spaces with new data. We take a large language model which has already learned the language itself in this large sampling process, and then we augment it with some new, personal data so that it changes its representations to better reflect the co-occurrence of words in the new data. In this way, with enough data, we can fine-tune the mathematical representations of language models to reflect not just English broadly, but specifically our language, the semantics that we've learned over time and that act as a sort of unique cognitive fingerprint which reflects us and only us. The underlying structure it extracts from language reveals information that can greatly aid our ability to connect and communicate. As we shift from general language models as the standard, to more personalized models, fine-tuned to reflect the nuances of our own use of language, we will no longer just make machines understand us better—we'll understand each other better, too.
+
+## References
+
+1. [Word2Vec: Efficient Estimation of Word Representations in Vector Space](https://doi.org/10.48550/arXiv.1310.4546)
+2. [Most College Students Have Used AI for Coursework](https://www.bestcolleges.com/research/most-college-students-have-used-ai-survey/)
+3. [Man is to Computer Programmer as Woman is to Homemaker?](https://doi.org/10.48550/arXiv.1509.01692)
+4. [Encoding of Functional Relations in Word Embeddings](https://aclanthology.org/D17-1308/)
+5. [Concept Erasure](https://doi.org/10.48550/arXiv.2308.14761)
+      </script>
+      
+      <!-- Script to render the Markdown -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Configure Marked options
+          marked.setOptions({
+            breaks: true,           // Add line breaks on single line breaks
+            gfm: true,              // Use GitHub Flavored Markdown
+            headerIds: true,        // Add IDs to headers for linking
+            mangle: false,          // Don't mangle header IDs
+            smartLists: true,       // Use smarter list behavior
+            smartypants: true,      // Use "smart" typographic punctuation
+            xhtml: false            // Don't use self-closing tags
+          });
+          
+          const markdownContent = document.getElementById('markdown-content').textContent;
+          document.getElementById('essay-content').innerHTML = marked.parse(markdownContent);
+        });
+      </script>
+    </div>
+    <footer>
+      <a href="https://www.youtube.com/@giordanorogers">youtube</a> | 
+      <a href="https://www.linkedin.com/in/giorogers/">linkedin</a>
+    </footer>
+  </div>
+</body>
+</html> 

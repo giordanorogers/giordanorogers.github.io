@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Algorithms are Manipulating You - Giordano Rogers</title>
+    <meta content="index" name="robots">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../styles.css" rel="stylesheet" type="text/css">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+    <!-- Add Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Styling for Markdown content */
+        .markdown-body {
+            font-family: 'Palatino', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+        }
+        
+        .markdown-body h1, 
+        .markdown-body h2, 
+        .markdown-body h3, 
+        .markdown-body h4, 
+        .markdown-body h5, 
+        .markdown-body h6 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: bold;
+            line-height: 1.25;
+        }
+        
+        .markdown-body h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+        
+        .markdown-body p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body blockquote {
+            padding: 0.5em 1em;
+            color: #555;
+            border-left: 0.25em solid #666;
+            margin: 0 0 24px 0;
+            font-style: italic;
+            background-color: #f5f1e5;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .markdown-body blockquote p {
+            margin-bottom: 8px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        
+        .markdown-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .markdown-body a {
+            color: #666;
+            text-decoration: underline;
+        }
+        
+        .markdown-body a:hover {
+            color: #333;
+        }
+        
+        .markdown-body code {
+            font-family: 'Inconsolata', monospace;
+            background-color: #f2ede0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        /* Styling for references/citations */
+        .markdown-body sup {
+            font-size: 0.75em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            top: -0.5em;
+        }
+        
+        .markdown-body sup a {
+            color: #6a4c93;
+            text-decoration: none;
+            padding: 0 2px;
+            font-weight: bold;
+        }
+        
+        .markdown-body sup a:hover {
+            text-decoration: underline;
+            color: #4a347a;
+        }
+    </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="../index.html" class="sidebar-button">Home</a>
+    <a href="../about.html" class="sidebar-button">About</a>
+    <img src="../images/davinci-wing.jpg" alt="Leonardo da Vinci's Wing Design" class="sidebar-image" title="Leonardo da Vinci's Wing Design">
+    <div class="sidebar-quote japanese">
+        "機械を設計する者たち——どれほど自分の行為が善だと信じていても、時の風はやがて彼らを産業文明の道具に変えてしまう。<br>決して無傷では済まない。<br>それは呪われた夢なのだ。"
+    </div>
+  </div>
+  <div id="container">
+    <header>
+      <h1><a href="https://giordanorogers.github.io">Giordano Rogers</a></h1>
+      <nav></nav>
+      <nav id="account"></nav>
+    </header>
+    <div id="content">
+      <div id="essay-content" class="markdown-body"></div>
+      <script type="text/markdown" id="markdown-content">
+## Algorithms are Manipulating You
+
+*December 1, 2023*
+
+Imagine if from the moment you woke up you never had to make a choice. You have an assistant who you can always trust to know what's good for you. They pick the breakfast you eat, the music you listen to, the way you get to work. Everything's offloaded. You don't have to think. Which sounds convenient.
+
+But if your assistant has a camera and a microphone on you and gets paid every time you take their advice, that's a conflict of interest. And this is what it's like on the internet now.
+
+The social media content algorithms decide what you read and what you watch. They do that for literally billions of people for hours every day, so in that sense, they have more control over human cognitive input than any dictator in history has ever had. And they are completely unregulated.
+
+The algorithm doesn't know that you're a human being or you have a brain. As far as it's concerned, you're just a string of clicks, but it wants to turn you into a string of clicks that, in the long run, generates more clicks. Every ad is targeted and every website is tracking as much data as possible. And we just put up with it.
+
+79% of Internet users feel they've lost control over their personal data, and the reality is that data is being used to study us and take our money and attention. And people are cool with it—91% of consumers prefer brands that provide personalized recommendations; 74% get mad when content isn't personalized.
+
+And yeah, personalized recommendations are convenient, but this tech is invasive, and it's becoming normal fast. And things are just going to keep getting weirder, which makes you question what privacy and autonomy mean going forward when these algorithms know us better than we know ourselves.
+
+But let me explain the technology and history behind this.
+
+Recommendation algorithms or recommender systems are programs that match a user to a product. Websites run code and AI that analyzes user activity and use it to personalize everything. When you're new to a site, they show you generic popular stuff, but the more you use it, the more data it gets, and soon it knows your taste.
+
+Hyper-personalization and Big Data are new, but businesses have always analyzed their customers. Since the early 1900s, companies have collected customer data with surveys and loyalty programs, but the internet pushed the industry forward.
+
+In 1995, amazon.com started selling books online. In 2 months they were making $20,000 a week. In 2 years they were the world's largest bookseller, and in that year—1997—they created a state-of-the art recommendation engine.
+
+> "We could see what you looked at. We could also see what you paused at. We could see what you put in your basket but didn't order. We could see what you put in your basket and did order... We started realizing, man this is rich. This is rich rich rich. And so we've used it for everything."
+>
+> — Jeff Bezos
+
+And in a few short years, Amazon went from selling books to selling everything. And every online business started personalizing everything they could, which required them to know and analyze everything about users.
+
+Data enables relevance. What makes personalization work is relevance. AI personalization enables corporations to create hyper-relevance and even predictive relevance. They can discern something that's going to be relevant to the customer before she or he even realizes they're going to need it.
+
+This isn't just information. These aren't just financial stats. This is culture. These are the physics of culture. And if these algorithms, like the algorithms on Wall Street, just crashed one day and went awry, how would we know? What would it look like?
+
+One in three humans uses Facebook every month, and they all produce textbooks of data every day. But hyper-personalization isn't just about profit and privacy—it's about autonomy and power.
+
+Every resource is exploited by people who want money and power. Data is special because it's a resource we all generate personally, and we have a right to our data just like a country has rights to its natural resources. But because the internet is supposed to be this lawless information dimension, as soon as our information became valuable, all the big players just started mining our data 'cause they could.
+
+And the fact that it's possible to go the extra mile and buy special tech and software to stay private on the internet isn't a practical solution. Most people either don't understand how their data is being mined or don't have the patience to go through the effort of earning their privacy.
+
+Data exploitation should be a top priority for legislation, but as of this writing, the US doesn't have federal law on data privacy. And although governments abuse data as well, who but them could hold the tech companies accountable?
+
+So how does the situation evolve?
+
+Will these recommendations just make the current corporate and media machines that much stronger? Will they make a new machine altogether?
+
+We all want to live in a world where access to good products, services, and ideas can happen organically. So since personal data can enable this, how do we regulate and optimize it?
+
+Big government has an even worse track record than the free market. But in a world with weapons of mass destruction, we need governing bodies to keep everyone somewhat in check.
+
+Recent advancements in blockchain technology have popularized the idea of decentralization. Blockchain is a digital ledger controlled by a network rather than a single entity, encrypted sequentially so it can't be modified, added to based on the consensus of the network, capable of executing certain actions when set conditions are met, and with a public transaction history but anonymity for network members.
+
+Maybe we need a global blockchain to democratize the control of such impactful tech. Super intelligent personalization ought to be in the hands of a public network that can't be hijacked, and blockchain technology might be approaching a maturity of adoption and infrastructure that's capable of handling that task.
+
+But once a system can influence human behavior undetected, all forms of governance are vulnerable. The suggested ideas are constantly going viral because they're targeting so well. How do we trust each other to express our agency through a vote and not the will of whatever we've been exposed to on the internet?
+
+The algorithm itself would be so tapped into our behavior that if it ever gained autonomy, we shouldn't be able to notice if it decided to direct our behavior somehow.
+
+But the same personal data that's used for profit and propaganda now could be used to propagate wisdom and love. Could a super intelligent algorithm find a harmony between love and self-interest?
+
+Could we trust it to manipulate us benevolently?
+      </script>
+      
+      <!-- Script to render the Markdown -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Configure Marked options
+          marked.setOptions({
+            breaks: true,           // Add line breaks on single line breaks
+            gfm: true,              // Use GitHub Flavored Markdown
+            headerIds: true,        // Add IDs to headers for linking
+            mangle: false,          // Don't mangle header IDs
+            smartLists: true,       // Use smarter list behavior
+            smartypants: true,      // Use "smart" typographic punctuation
+            xhtml: false            // Don't use self-closing tags
+          });
+          
+          const markdownContent = document.getElementById('markdown-content').textContent;
+          document.getElementById('essay-content').innerHTML = marked.parse(markdownContent);
+        });
+      </script>
+    </div>
+    <footer>
+      <a href="https://www.youtube.com/@giordanorogers">youtube</a> | 
+      <a href="https://www.linkedin.com/in/giorogers/">linkedin</a>
+    </footer>
+  </div>
+</body>
+</html> 

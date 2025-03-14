@@ -5,14 +5,19 @@
     <title>List of posts - Giordano Rogers</title>
     <meta content="index" name="robots">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://antirez.com/css/style.css?v=14" rel="stylesheet" type="text/css">
-    <link href="https://antirez.com/images/favicon.png" rel="shortcut icon">
-    <link href="https://antirez.com/rss" rel="alternate" type="application/rss+xml">
+    <link href="../styles.css" rel="stylesheet" type="text/css">
+    <link href="../images/favicon.ico" rel="shortcut icon">
     <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
-    <script src="https://antirez.com/js/jquery.1.6.4.min.js"></script>
-    <script src="https://antirez.com/js/app.js?v=10"></script>
 </head>
 <body>
+  <div class="sidebar">
+    <a href="../index.html" class="sidebar-button">Home</a>
+    <a href="../about.html" class="sidebar-button">About</a>
+    <img src="../images/davinci-wing.jpg" alt="Leonardo da Vinci's Wing Design" class="sidebar-image" title="Leonardo da Vinci's Wing Design">
+    <div class="sidebar-quote">
+        "Io amo quelli che sorridono nel dolore, che traggono forza dalla sventura, e diventano coraggiosi per riflessione."
+    </div>
+  </div>
   <div id="container">
     <header>
       <h1><a href="https://giordanorogers.github.io">Giordano Rogers</a></h1>
@@ -23,7 +28,8 @@
       {{ MARKDOWN_CONTENT }}
     </div>
     <footer>
-      <!-- match the same footer style if you wish -->
+      <a href="https://www.youtube.com/@giordanorogers">youtube</a> | 
+      <a href="https://www.linkedin.com/in/giorogers/">linkedin</a>
     </footer>
   </div>
 </body>
