@@ -506,3 +506,129 @@ topcomment {
         flex: 1;
     }
 }
+
+/* Quarto notebook styling */
+.quarto-content {
+    font-family: 'Palatino', serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.quarto-content h1 {
+    font-size: 2.5em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: black;
+}
+
+.quarto-content h2 {
+    font-size: 2em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: black;
+}
+
+.quarto-content h3 {
+    font-size: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: black;
+}
+
+.quarto-content p {
+    margin-bottom: 1em;
+}
+
+.quarto-content pre {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1em;
+    overflow-x: auto;
+    font-family: 'Inconsolata', monospace;
+    margin-bottom: 1em;
+}
+
+.quarto-content code {
+    font-family: 'Inconsolata', monospace;
+    background-color: #f5f5f5;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+.quarto-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.quarto-content .cell {
+    margin-bottom: 1.5em;
+}
+
+.quarto-content .cell-output {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 1em;
+    margin-top: 0.5em;
+}
+
+.quarto-content .cell-output pre {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.quarto-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+}
+
+.quarto-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.quarto-content th, .quarto-content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.quarto-content th {
+    background-color: #f2f2f2;
+}
+
+.quarto-content blockquote {
+    border-left: 4px solid #ddd;
+    padding-left: 1em;
+    margin-left: 0;
+    color: #666;
+}
+
+.quarto-content ul, .quarto-content ol {
+    margin-bottom: 1em;
+    padding-left: 2em;
+}
+
+.quarto-content li {
+    margin-bottom: 0.5em;
+}
+
+.quarto-content .math {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Responsive adjustments for Quarto content */
+@media screen and (max-width: 800px) {
+    .quarto-content {
+        font-size: 0.9em;
+    }
+    
+    .quarto-content pre {
+        font-size: 0.9em;
+    }
+}
