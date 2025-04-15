@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>The Fanciful Jargon of Mech Interp - Giordano Rogers</title>
+    <meta content="index" name="robots">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../styles.css" rel="stylesheet" type="text/css">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- MathJax configuration -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        }
+      };
+    </script>
+    <style>
+        /* Styling for Markdown content */
+        .markdown-body {
+            font-family: 'Palatino', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+        }
+        
+        .markdown-body h1, 
+        .markdown-body h2, 
+        .markdown-body h3, 
+        .markdown-body h4, 
+        .markdown-body h5, 
+        .markdown-body h6 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: bold;
+            line-height: 1.25;
+        }
+        
+        .markdown-body h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+        
+        .markdown-body p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body blockquote {
+            padding: 0.5em 1em;
+            color: #555;
+            border-left: 0.25em solid #666;
+            margin: 0 0 24px 0;
+            font-style: italic;
+            background-color: #f5f1e5;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .markdown-body blockquote p {
+            margin-bottom: 8px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        
+        .markdown-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .markdown-body a {
+            color: #666;
+            text-decoration: underline;
+        }
+        
+        .markdown-body a:hover {
+            color: #333;
+        }
+        
+        /* Improved code styling */
+        .markdown-body code {
+            font-family: 'Inconsolata', monospace;
+            background-color: #f2ede0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        /* Python code block styling */
+        .markdown-body pre {
+            max-width: 100%;
+            overflow-x: auto;
+            margin: 30px 0; /* Increased top and bottom margins */
+            padding: 16px;
+            border-radius: 6px; /* Subtle rounding of outer container */
+            background-color: #000;
+        }
+        
+        .markdown-body pre code {
+            background-color: #000;
+            color: #4caf50; /* Green text */
+            font-family: 'Inconsolata', monospace;
+            padding: 10px; /* Added padding inside the code block */
+            display: block;
+            white-space: pre;
+            overflow-x: auto;
+            border-radius: 4px; /* Subtle rounding of code element */
+            line-height: 1.5;
+        }
+        
+        /* Styling for centered images */
+        .markdown-body .center-img {
+            display: block;
+            margin: 25px auto;
+            max-width: 90%;
+        }
+        
+        /* Styling for references/citations */
+        .markdown-body sup {
+            font-size: 0.75em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            top: -0.5em;
+        }
+        
+        .markdown-body sup a {
+            color: #6a4c93;
+            text-decoration: none;
+            padding: 0 2px;
+            font-weight: bold;
+        }
+        
+        .markdown-body sup a:hover {
+            text-decoration: underline;
+            color: #4a347a;
+        }
+        
+        /* Styling for LaTeX formulas */
+        .formula-container {
+            overflow-x: auto;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        /* Ensure MathJax doesn't overflow */
+        .MathJax {
+            max-width: 100%;
+            overflow-x: visible !important;
+        }
+        
+        /* Override MathJax container styles to prevent scrollbars */
+        .MathJax_Display {
+            overflow-x: visible !important;
+            overflow-y: visible !important;
+        }
+    </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="../index.html" class="sidebar-button">Home</a>
+    <a href="../about.html" class="sidebar-button">About</a>
+    <img src="../images/davinci-wing.jpg" alt="Leonardo da Vinci's Wing Design" class="sidebar-image" title="Leonardo da Vinci's Wing Design">
+    <div class="sidebar-quote japanese">
+        "機械を設計する者たち——どれほど自分の行為が善だと信じていても、時の風はやがて彼らを産業文明の道具に変えてしまう。<br>決して無傷では済まない。<br>それは呪われた夢なのだ"
+    </div>
+  </div>
+  <div id="container">
+    <header>
+      <h1><a href="https://giordanorogers.github.io">Giordano Rogers</a></h1>
+      <nav></nav>
+      <nav id="account"></nav>
+  </header>
+  <div id="content">
+    <div id="essay-content" class="markdown-body"></div>
+    <script type="text/markdown" id="markdown-content">
+## Your Blog Post Title
+
+*April 5th, 2025*
+
+---
+
+Mech interp is an awesome subfield of AI research and easily the area I find most interesting right now.
+This blog is **not** meant to be a hitpiece on mech interp or anyone in it.
+More than anything, it is a way for me to engage with a lot of the common jargon in the field.
+One confounding factor in a lot of areas, and especially in STEM, is that there's a lot of terms that people use because they've just always used them but they don't actually bring much clarity to the concept.
+For example, I think the term "Gaussian distribution" sounds magical and cool and way less boring than "Normal distribution".
+But I also know who Carl Friedrich Gauss is. I respect him as a mathematician. I think he has a cool sounding name.
+But that doesn't outshine the fact that "Normal distribution" intrinsically makes way more sense.
+It's intuitive explanation is really easy to comprehend.
+In the limit, things normally tend to distribute in this way.
+There's a lot of other terms in math and physics that are confounded by the use of attribution-based terminology rather than functional terminology.
+In mech interp it's a bit different.
+The field is still young enough, and no one is so far bold enough, that nothing is really named after someone.
+In contrast, a lot of things are just named to sound magical and exciting.
+But in the same way the acutal functional reality of what is going on gets obscured under an ornate layer of mysticism.
+My hope is that this blog will demystify some of these concepts for myself and for others.
+They say a problem well-stated is a problem half-solved.
+So if the goal is to develop safe superintelligent systems, it's important that we're not deluding ourselves by baking in false intuitions because of confounding jargon.
+
+## Mechanistic interpretability
+
+Let's start with the name of the field itself. I actually think this is a pretty good name. I don't take much issue with it. But it does try to draw a distinction between itself and the broader field of Interpretability, that seems to exist more in thoery than in practice. For example, Google DeepMind and Antrhtopic just call their mech interp teams their interpretability teams **FACT CHECK!**. A more direct name might just be Artificial Neural Network Interpretability. But that's even more of a mouthful. Mechanistic Interpretability is fine in my book. We're trying to interpret the machanisms that underlie the power of aritifical neural networks via causal interventions that hopefully allow us to reverse angineering their representations.
+
+## Superposition --> Feature Overlap
+
+The superposition Antropic writes about in their Toy Models of Superposition paper is not the same thing as how a quantum system exists in multiple states until observed. There is some conceptual similarity there, but the mathematics are different. And this means whatever similarity the two ideas do share can make the whole onboarding to understanding that much more confusing for newbies. What the term superposition describes is a phenomenon where neurons in a network encode more features than they have directions. So the feature vectors get stored almost orthogonally, and the neuron activates for multiple semantically distinct inputs.
+
+I think the term "Feature Overlap" is more clear here. Instead of being able to easily decode the representation contained in a neuron, we have to deal with the noise introduced by the too-many features being stuffed into the neuron's representation space.
+
+## Induction Heads --> Last-time Heads
+
+The classic example of logical induction is the term:
+"All the swans I've seen are white, therefore all swans are white."
+Formal mathematical induction follows a similar concept:
+"If a statement is true for a given integer n, and for each subsequent integer n+1, then the statement is true for all integers."
+
+It's important to understand that this is not what the concept of induction heads is intended to convey. An induction head is just an attention head that activates for previous occurrences of a given token in the context. The term last-time heads is more precise. It's not that induction heads are used for any inductive operations going on in the model. Their utility is that they can draw what happened last time this particualr token appeared into attention.
+
+Core to the distinction I'm making here is that this is different from the principle of mathematical induction. Induction is supposed to hold for all steps in a sequence. If last-time heads always resulted in mimciing the behavior of what came after the last occurrence of a given token, transformers would *lose* alot of their generalization power and become overly repetitive. So when you see the term induction head, don't get it misconstrued. The model isn't doing any form of inductive reasoning. It's just raising it's attention on the last-time this token appeared in context, and what token followed it.
+
+## Activation Patching --> ???
+
+## Linear Probes --> ???
+
+## Steering Vectors --> ???
+
+## Sparse Autoencoders --> ???
+
+## Logit Lens --> ???
+
+## Epilogue
+
+I want to say that I hope none of the above did anything to dilute the joy of mech interp research. This truly is an exciting and stimulating field to learn, and participate in. But it is my strong conviction that precision with our words will help the field accelerate toward our goal quicker. It helps beginners intuit the research landscape faster, and it helps experienced researchers avoid adopting logical fallacies propelled by the repeated use of imprecise slang.
+
+If anyone reading this has any disagreements with the faults I find in established terms, or can thing of any improvements to the suggestions I've made, please email me! The goal of this is to bring clarity to my and your thinking, not to boast that I can come up with better names for things. If you find fault in my thinking on any of these ideas, I welcome any and all contrasting takes.
+---
+
+Start writing your blog post here. This template includes support for:
+
+- Markdown formatting
+- LaTeX equations
+- Code blocks with syntax highlighting
+- Images with centering
+- Citations with clickable references
+
+## Basic Markdown Features
+
+You can use **bold text**, *italic text*, and `inline code` easily with Markdown.
+
+### Lists
+
+Ordered lists:
+1. First item
+2. Second item
+3. Third item
+
+Unordered lists:
+- Item one
+- Item two
+- Item three
+
+### Blockquotes
+
+> This is a blockquote. It will be styled with a subtle background color and left border.
+> 
+> You can include multiple paragraphs within a blockquote.
+
+### Links
+
+[Link text](https://example.com)
+
+## Mathematics with LaTeX
+
+For inline math, use single dollar signs: $E = mc^2$
+
+For display equations, use the formula container:
+
+<div class="formula-container">
+$$
+\begin{align}
+f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2\pi i \xi x} d\xi
+\end{align}
+$$
+</div>
+
+## Code Blocks
+
+```python
+def hello_world():
+    # This is a comment that will appear in gray
+    print("Hello, world!")
+    
+    for i in range(10):
+        print(f"Count: {i}")
+        
+    return True
+```
+
+## Images
+
+To add a centered image:
+
+<div class="center-img">
+![Alt text for the image](path/to/your/image.jpg)
+</div>
+
+## Citations and References
+
+This is a sentence with a citation<sup id="cite1">[[1]](#ref1)</sup> that links to the reference section.
+
+Here's another sentence with a different citation<sup id="cite2">[[2]](#ref2)</sup> for demonstration.
+
+---
+
+## References
+
+<a id="ref1">[1]</a> First Author, Second Author. (Year). "Title of the Paper or Book." Journal Name or Publisher, Volume(Issue), Page numbers. [↩](#cite1)
+
+<a id="ref2">[2]</a> Another Author. (Year). "Another Title." Another Source, Details. [↩](#cite2)
+
+    </script>
+    
+    <!-- Script to render the Markdown -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Configure Marked options
+        marked.setOptions({
+          breaks: true,           // Add line breaks on single line breaks
+          gfm: true,              // Use GitHub Flavored Markdown
+          headerIds: true,        // Add IDs to headers for linking
+          mangle: false,          // Don't mangle header IDs
+          smartLists: true,       // Use smarter list behavior
+          smartypants: true,      // Use "smart" typographic punctuation
+          xhtml: false,           // Don't use self-closing tags
+          // Add options for code highlighting
+          highlight: function(code, lang) {
+            return code;
+          }
+        });
+        
+        const markdownContent = document.getElementById('markdown-content').textContent;
+        document.getElementById('essay-content').innerHTML = marked.parse(markdownContent);
+        
+        // After markdown is rendered, typeset the math with MathJax
+        if (typeof MathJax !== 'undefined') {
+          MathJax.typesetPromise().catch(function(err) {
+            console.log('Error typesetting math:', err);
+          });
+        }
+      });
+    </script>
+  </div>
+    <footer>
+      <a href="https://www.youtube.com/@giordanorogers">youtube</a> | 
+      <a href="https://www.linkedin.com/in/giorogers/">linkedin</a>
+    </footer>
+  </div>
+</body>
+</html> 

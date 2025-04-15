@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Writing as Perplexity-Compression Optimization - Giordano Rogers</title>
+    <meta content="index" name="robots">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../styles.css" rel="stylesheet" type="text/css">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+    <!-- Add Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Styling for Markdown content */
+        .markdown-body {
+            font-family: 'Palatino', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+        }
+        
+        .markdown-body h1, 
+        .markdown-body h2, 
+        .markdown-body h3, 
+        .markdown-body h4, 
+        .markdown-body h5, 
+        .markdown-body h6 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: bold;
+            line-height: 1.25;
+        }
+        
+        .markdown-body h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+        
+        .markdown-body p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body blockquote {
+            padding: 0.5em 1em;
+            color: #555;
+            border-left: 0.25em solid #666;
+            margin: 0 0 24px 0;
+            font-style: italic;
+            background-color: #f5f1e5;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .markdown-body blockquote p {
+            margin-bottom: 8px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        
+        .markdown-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .markdown-body a {
+            color: #666;
+            text-decoration: underline;
+        }
+        
+        .markdown-body a:hover {
+            color: #333;
+        }
+        
+        .markdown-body code {
+            font-family: 'Inconsolata', monospace;
+            background-color: #f2ede0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        /* Styling for references/citations */
+        .markdown-body sup {
+            font-size: 0.75em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            top: -0.5em;
+        }
+        
+        .markdown-body sup a {
+            color: #6a4c93;
+            text-decoration: none;
+            padding: 0 2px;
+            font-weight: bold;
+        }
+        
+        .markdown-body sup a:hover {
+            text-decoration: underline;
+            color: #4a347a;
+        }
+    </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="../index.html" class="sidebar-button">Home</a>
+    <a href="../about.html" class="sidebar-button">About</a>
+    <img src="../images/davinci-wing.jpg" alt="Leonardo da Vinci's Wing Design" class="sidebar-image" title="Leonardo da Vinci's Wing Design">
+    <div class="sidebar-quote japanese">
+        "機械を設計する者たち——どれほど自分の行為が善だと信じていても、時の風はやがて彼らを産業文明の道具に変えてしまう。<br>決して無傷では済まない。<br>それは呪われた夢なのだ。"
+    </div>
+  </div>
+  <div id="container">
+    <header>
+      <h1><a href="https://giordanorogers.github.io">Giordano Rogers</a></h1>
+      <nav></nav>
+      <nav id="account"></nav>
+    </header>
+    <div id="content">
+      <div id="essay-content" class="markdown-body"></div>
+      <script type="text/markdown" id="markdown-content">
+## Writing as Compression-Perplexity Optimization
+
+*April 15th, 2025*
+
+Good writing is surprising and resonant. It threads the familiar with the unfamiliar to become the first of a kind. Think of the process. Scrolling through sources, dumping scattered thoughts, the reflections, the revisions, the serendipity of everyday life. What is distilled throughout surfaces in a work, and rings true.
+
+Of course, novelty and clarity are subjective, and contextual. Today we find general relativity and genetic adaptation intuitive. In very little time, a shocking truth becomes the new normal. So it is the delightful burden of the writer to tread new soil in the landscape of thought.
+
+We can view a sentence as a probabilistic sequence, updating in the reader’s mind with each new word. Take the sentence: “Today my dog ate chocolate, and I had to take her to the—“. Your mental language model may predict “vet”, “hospital”, or even “cemetery”. If instead the sentence were to continue: “Today my dog ate chocolate, and I had to take her to the candy store because—”, your surprise spikes. You’ve seen more sentences akin to your initial prediction than to this continuation. But now let the sentence proceed with: “Today my dog ate chocolate, and I had to take her to the candy store because she wouldn’t stop begging for more.” Your degree of surprise falls. “—she wouldn’t stop begging for more.” is not so novel a continuation, once you’ve seen the prior sequence. The sentence returns to a reasonable degree of predictability.
+
+Information theory lets us quantify this surprise with a perplexity score. In practice, perplexity is commonly used as a way to measure the quality of a language model. If we witness high perplexity as a language model processes a sequence of words, we may deem its representation of the language as poor. As people, we possess mental language models, formed by our history and cultural exposure. And if the reward model of the knowledge-hungry reader is the ability to predict, and therefore prove her command over, a body of work, then perplexity provides a useful framing for the value proposition we as writers offer our curious audience. This novelty, this unpredictability, this perplexity, is what the reader craves.
+
+But perplexity alone could never be the sole goal of good writing. It is trivial to hack. Imagine me sitting at the keyboard mashing the sequence: “afjdik fetoq fhweiula fhsk—“. You have no way of predicting what will come next, other than that it is likely to start with an “f” due to an artifact of my button mashing. Randomness maximizes surprise but lacks coherence or purpose. It communicates nothing.
+
+Surprising writing cannot simply be random. It needs meaning. The antipode of such randomness is an information signal. And to this end, useful exposition is data compression. Reading an article instead of its references is motivated by time and space efficiency. We want to save time. And we may enjoy the author’s method of organizing information and conveying the essential. This extends to many kinds of writing. Bloggers synthesize centroids of idea space into cogent representations. Autobiographers translate decades of perception into pages of text. Fiction authors compress sporadic daydreams into structured narratives. Each has its own compression logic and optimal perplexity range given its intended audience.
+
+Verbatim copies of source material are, at best, aggregation, and at worst plagiarism—or personal confession for the autobiographer and the fiction author. Contrasted with perplexing compression, you have the unfortunate hallmark of many dispassionate high-school essays—drab oscillation between quotations and their paraphrase. 
+
+The skillful author encodes his prose with the essence of every reference. And the reader delights in his artful modulation between the clear and the perplexing. Crucially, this quality is insufficient for great writing, but it’s probably necessary for a piece to be good or, at the very least, not redundant.
+      </script>
+      
+      <!-- Script to render the Markdown -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Configure Marked options
+          marked.setOptions({
+            breaks: true,           // Add line breaks on single line breaks
+            gfm: true,              // Use GitHub Flavored Markdown
+            headerIds: true,        // Add IDs to headers for linking
+            mangle: false,          // Don't mangle header IDs
+            smartLists: true,       // Use smarter list behavior
+            smartypants: true,      // Use "smart" typographic punctuation
+            xhtml: false            // Don't use self-closing tags
+          });
+          
+          const markdownContent = document.getElementById('markdown-content').textContent;
+          document.getElementById('essay-content').innerHTML = marked.parse(markdownContent);
+        });
+      </script>
+    </div>
+    <footer>
+      <a href="https://www.youtube.com/@giordanorogers">youtube</a> | 
+      <a href="https://www.linkedin.com/in/giorogers/">linkedin</a>
+    </footer>
+  </div>
+</body>
+</html> 

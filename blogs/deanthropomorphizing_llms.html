@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>A Jargon for Deanthropomorphizing LLMs - Giordano Rogers</title>
+    <meta content="index" name="robots">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../styles.css" rel="stylesheet" type="text/css">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- MathJax configuration -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        }
+      };
+    </script>
+    <style>
+        /* Styling for Markdown content */
+        .markdown-body {
+            font-family: 'Palatino', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+        }
+        
+        .markdown-body h1, 
+        .markdown-body h2, 
+        .markdown-body h3, 
+        .markdown-body h4, 
+        .markdown-body h5, 
+        .markdown-body h6 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: bold;
+            line-height: 1.25;
+        }
+        
+        .markdown-body h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+        
+        .markdown-body p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body blockquote {
+            padding: 0.5em 1em;
+            color: #555;
+            border-left: 0.25em solid #666;
+            margin: 0 0 24px 0;
+            font-style: italic;
+            background-color: #f5f1e5;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .markdown-body blockquote p {
+            margin-bottom: 8px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        
+        .markdown-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .markdown-body a {
+            color: #666;
+            text-decoration: underline;
+        }
+        
+        .markdown-body a:hover {
+            color: #333;
+        }
+        
+        /* Improved code styling */
+        .markdown-body code {
+            font-family: 'Inconsolata', monospace;
+            background-color: #f2ede0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        /* Python code block styling */
+        .markdown-body pre {
+            max-width: 100%;
+            overflow-x: auto;
+            margin: 30px 0; /* Increased top and bottom margins */
+            padding: 16px;
+            border-radius: 6px; /* Subtle rounding of outer container */
+            background-color: #000;
+        }
+        
+        .markdown-body pre code {
+            background-color: #000;
+            color: #4caf50; /* Green text */
+            font-family: 'Inconsolata', monospace;
+            padding: 10px; /* Added padding inside the code block */
+            display: block;
+            white-space: pre;
+            overflow-x: auto;
+            border-radius: 4px; /* Subtle rounding of code element */
+            line-height: 1.5;
+        }
+        
+        /* Styling for centered images */
+        .markdown-body .center-img {
+            display: block;
+            margin: 25px auto;
+            max-width: 90%;
+        }
+        
+        /* Styling for references/citations */
+        .markdown-body sup {
+            font-size: 0.75em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            top: -0.5em;
+        }
+        
+        .markdown-body sup a {
+            color: #6a4c93;
+            text-decoration: none;
+            padding: 0 2px;
+            font-weight: bold;
+        }
+        
+        .markdown-body sup a:hover {
+            text-decoration: underline;
+            color: #4a347a;
+        }
+        
+        /* Styling for LaTeX formulas */
+        .formula-container {
+            overflow-x: auto;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        /* Ensure MathJax doesn't overflow */
+        .MathJax {
+            max-width: 100%;
+            overflow-x: visible !important;
+        }
+        
+        /* Override MathJax container styles to prevent scrollbars */
+        .MathJax_Display {
+            overflow-x: visible !important;
+            overflow-y: visible !important;
+        }
+    </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="../index.html" class="sidebar-button">Home</a>
+    <a href="../about.html" class="sidebar-button">About</a>
+    <img src="../images/davinci-wing.jpg" alt="Leonardo da Vinci's Wing Design" class="sidebar-image" title="Leonardo da Vinci's Wing Design">
+    <div class="sidebar-quote japanese">
+        "機械を設計する者たち——どれほど自分の行為が善だと信じていても、時の風はやがて彼らを産業文明の道具に変えてしまう。<br>決して無傷では済まない。<br>それは呪われた夢なのだ"
+    </div>
+  </div>
+  <div id="container">
+    <header>
+      <h1><a href="https://giordanorogers.github.io">Giordano Rogers</a></h1>
+      <nav></nav>
+      <nav id="account"></nav>
+  </header>
+  <div id="content">
+    <div id="essay-content" class="markdown-body"></div>
+    <script type="text/markdown" id="markdown-content">
+## A Jargon for Deanthropomorphizing LLMs
+
+*March 23, 2025*
+
+---
+
+LLMs are really cool. They produce text in ways that feel human. And the way they operate is still somewhat obscured and therefore appears slightly magical. Prior to the GPT boom, human language was considered unique to humans. And so, especially as generative language modeling has improved, the urge to describe these LLMs in humanistic ways gets more prescient.
+
+But as AI researchers, this habit is dangerous. If our goal is to understand how LLMs work, we must be precise in the way we speak and think about them. Otherwise, we may suffer from an explosion of logical fallacies that lead us down unfruitful paths in our experimentation.
+
+## Some words to be careful of
+
+- thinking/reasoning
+        - using a sequence of autoregressive text generation to increase the probability of a correct final answer to a given input query.
+        - replacement synonym: **strong inference** or **strong generation**
+- writing
+        - generating is more accurate. LLMs aren't translating fuzzy thoughts into concrete words like humans do. They're autoregressively predicting the next best token to generate given the context, query, and previous set of tokens.
+        - replacement synonym: **weak inference** or **weak generation**
+
+**NOTE:** I find in my own thinking that even inference here is tied to an anthropomorphism in my own mind. But it's the conventional term used in the field. Maybe generation is better in both cases. So *weak generation* is direct generation in the normal autoregressive sense of GPT-4o, whereas *strong generation* is an extrapolation of *weak generation* where *weak generation* is done to reach a better final output.
+    </script>
+    
+    <!-- Script to render the Markdown -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Configure Marked options
+        marked.setOptions({
+          breaks: true,           // Add line breaks on single line breaks
+          gfm: true,              // Use GitHub Flavored Markdown
+          headerIds: true,        // Add IDs to headers for linking
+          mangle: false,          // Don't mangle header IDs
+          smartLists: true,       // Use smarter list behavior
+          smartypants: true,      // Use "smart" typographic punctuation
+          xhtml: false,           // Don't use self-closing tags
+          // Add options for code highlighting
+          highlight: function(code, lang) {
+            return code;
+          }
+        });
+        
+        const markdownContent = document.getElementById('markdown-content').textContent;
+        document.getElementById('essay-content').innerHTML = marked.parse(markdownContent);
+        
+        // After markdown is rendered, typeset the math with MathJax
+        if (typeof MathJax !== 'undefined') {
+          MathJax.typesetPromise().catch(function(err) {
+            console.log('Error typesetting math:', err);
+          });
+        }
+      });
+    </script>
+  </div>
+    <footer>
+      <a href="https://www.youtube.com/@giordanorogers">youtube</a> | 
+      <a href="https://www.linkedin.com/in/giorogers/">linkedin</a>
+    </footer>
+  </div>
+</body>
+</html> 
