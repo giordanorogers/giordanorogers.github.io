@@ -383,30 +383,3 @@ Based on the above plot, we can make the following suppositions:
 ## Final Thoughts
 
 Patching at the residual stream level is informative, but it is the most coarse-grained form of patching we can do. For a more fine-grained analysis, we will want to observe the activations in the mlp and attention layers, which we will do in the next notebook.
-```
-
-## Image Formatting Instructions
-
-To properly render the images in your markdown file, you should:
-
-1. **Create an `images` directory** in the same location as your markdown file:
-   ```
-   your_project/
-   ├── activation_patching.md
-   └── images/
-       ├── transformer_architecture.png
-       └── indirect_effects_heatmap.png
-   ```
-
-2. **Save the images with these names**:
-   - The transformer architecture diagram (from page 3) should be saved as `transformer_architecture.png`
-   - The heatmap visualization (from page 9) should be saved as `indirect_effects_heatmap.png`
-
-3. **Use relative paths** in the markdown as shown above (`./images/filename.png`)
-
-4. **Alternative options**:
-   - If you prefer different names or locations, update the image paths in the markdown accordingly
-   - You can also use absolute URLs if hosting the images online
-   - For GitHub, you can upload images to your repository and use the raw URL
-
-The markdown uses standard image syntax: `![Alt text](path/to/image.png)` where the alt text describes the image for accessibility.
