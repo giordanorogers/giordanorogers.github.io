@@ -8,13 +8,9 @@ tags:
   - residual stream
 ---
 
-## Introduction and Setup
-
-### Introduction
-
-Mechanistic interpretability (MI) is a subfield of AI research focused on reverse-engineering the algorithms that Large Language Models (LLMs) learn.
-
 Activation patching is a technique that lets us identify which model components are involved in specific behaviors.
+
+It is a core method of interpretability research, a subfield of AI focused on reverse-engineering the algorithms that Large Language Models (LLMs) learn.
 
 The goal of this notebook is to explore activation patching through the lens of what we'll call the similarity task: where we want the LLM to discern which person in a list has an attribute in common with a specific main person.
 
