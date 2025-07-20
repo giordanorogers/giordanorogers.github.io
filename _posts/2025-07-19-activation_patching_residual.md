@@ -34,8 +34,7 @@ from nnsight import LanguageModel
 ### Model Setup
 
 ```python
-#model_name = "meta-llama/Llama-3.3-70B-Instruct"
-model_name = "meta-llama/Llama-3.2-1B-Instruct"
+model_name = "meta-llama/Llama-3.3-70B-Instruct"
 
 model = LanguageModel(
     model_name,
@@ -52,7 +51,7 @@ LlamaForCausalLM(
 (model): LlamaModel(
     (embed_tokens): Embedding(128256, 2048)
     (layers): ModuleList(
-    (0-15): 16 x LlamaDecoderLayer(
+    (0-79): 80 x LlamaDecoderLayer(
         (self_attn): LlamaAttention(
         (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
         (k_proj): Linear(in_features=2048, out_features=512, bias=False)
