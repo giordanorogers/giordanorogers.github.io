@@ -8,8 +8,6 @@ tags:
   - residual stream
 ---
 
-# Activation Patching: Finding Causal Circuits
-
 ## Introduction and Setup
 
 ### Introduction
