@@ -48,33 +48,33 @@ model
 Output:
 ```
 LlamaForCausalLM(
-(model): LlamaModel(
-    (embed_tokens): Embedding(128256, 2048)
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 8192)
     (layers): ModuleList(
-    (0-79): 80 x LlamaDecoderLayer(
+      (0-79): 80 x LlamaDecoderLayer(
         (self_attn): LlamaAttention(
-        (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
-        (k_proj): Linear(in_features=2048, out_features=512, bias=False)
-        (v_proj): Linear(in_features=2048, out_features=512, bias=False)
-        (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (q_proj): Linear(in_features=8192, out_features=8192, bias=False)
+          (k_proj): Linear(in_features=8192, out_features=1024, bias=False)
+          (v_proj): Linear(in_features=8192, out_features=1024, bias=False)
+          (o_proj): Linear(in_features=8192, out_features=8192, bias=False)
         )
         (mlp): LlamaMLP(
-        (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
-        (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
-        (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
-        (act_fn): SiLU()
+          (gate_proj): Linear(in_features=8192, out_features=28672, bias=False)
+          (up_proj): Linear(in_features=8192, out_features=28672, bias=False)
+          (down_proj): Linear(in_features=28672, out_features=8192, bias=False)
+          (act_fn): SiLU()
         )
-        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
-        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (input_layernorm): LlamaRMSNorm((8192,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((8192,), eps=1e-05)
+      )
     )
-    )
-    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (norm): LlamaRMSNorm((8192,), eps=1e-05)
     (rotary_emb): LlamaRotaryEmbedding()
-)
-(lm_head): Linear(in_features=2048, out_features=128256, bias=False)
-(generator): Generator(
+  )
+  (lm_head): Linear(in_features=8192, out_features=128256, bias=False)
+  (generator): Generator(
     (streamer): Streamer()
-)
+  )
 )
 ```
 
@@ -167,8 +167,8 @@ print(f"{len(clean_activations)=}")
 
 Output:
 ```
-clean_target_logits=18.390625
-len(clean_activations)=16
+clean_target_logits=20.0625
+len(clean_activations)=80
 ```
 
 ### Corrupt Run
