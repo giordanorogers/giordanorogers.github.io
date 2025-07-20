@@ -80,7 +80,7 @@ LlamaForCausalLM(
 
 Here we can see that Llama 70B is composed of 80 decoder layers, each of which includes an attention layer, and an MLP layer. Each layer connects to the next via addition with a skip-connection called the **residual stream**. We can get a sense for the relation between the residual stream, the attention layers, and the mlp layers in the diagram below:
 
-![Transformer Architecture Diagram](./images/transformer_architecture.png)
+![Transformer Architecture Diagram](images/transformer_architecture.png)
 
 ## The Selection Task & Core Concepts
 
@@ -369,7 +369,7 @@ Data shape: (28, 80)
 Number of tokens: 28
 ```
 
-![Indirect Effects of Residual Layers Heatmap](./images/indirect_effects_heatmap.png)
+![Indirect Effects of Residual Layers Heatmap](images/indirect_effects_heatmap.png)
 
 Based on the above plot, we can make the following suppositions:
 
