@@ -1,7 +1,7 @@
 ---
 title: 'What is creativity?'
 date: 2025-08-18
-permalink: /posts/2025/08/what_is_creativity?/
+permalink: /posts/2025/08/what_is_creativity/
 tags:
   - philosophy
   - creativity
