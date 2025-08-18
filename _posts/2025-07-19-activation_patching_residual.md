@@ -1,7 +1,7 @@
 ---
 title: 'Activation Patching the Residual Stream'
 date: 2025-07-19
-permalink: /posts/2012/08/activation_patching_residual/
+permalink: /posts/2025/07/activation_patching_residual/
 tags:
   - mech interp
   - activation patching
