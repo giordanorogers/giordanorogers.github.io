@@ -1,5 +1,5 @@
 ---
-title: 'What is creativity?'
+title: 'On creativity'
 date: 2025-08-18
 permalink: /posts/2025/08/what_is_creativity/
 tags:
