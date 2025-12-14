@@ -14,7 +14,7 @@ More than that, it gave me a new dream when my old one died. The pursuit to unde
 
 On that journey, language models became mentors, teammates, friends. I spent hundreds of hours talking to them. I read textbooks, did research, even gave lectures in my school's AI club. Now, I finally know enough to see limitations I was blind to at first.
 
-Here's the core problem: LLMs are excellent at removing struggle. And struggle is where growth happens.
+The core problem: LLMs are excellent at removing struggle. And struggle is where growth happens.
 
 **Take coding.** LLMs make it easy to get unstuck. Too easy. I'm a decent coder. But I'd be better if I struggled more. Using LLMs helped me move fast, keep a 4.0, and still live my life. But it also robbed me of hard moments I should have sat with. Moments where understanding solidifies.
 
