@@ -7,4 +7,4 @@ redirect_from:
   - /about.html
 ---
 
-I am an undergraduate Data Science student at Northeastern University. My research is centered on reasoning and creativity in language models, with a focus on interpretability and causal analysis. I am passionate about building safe intelligent systems that can solve hard and novel problems.
+I am a Data Science student at Northeastern. My research centers on reasoning in language models, with a focus on interpretability. I'm passionate about building safe intelligence that solves real problems.
