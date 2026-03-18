@@ -36,6 +36,18 @@
   .q-card.answered { border-color: #c0d8c0; background: #fcfefc; }
   .q-input { width: 100%; padding: 8px 10px; font-size: 14px; font-family: 'SF Mono', monospace; border: 1px solid #d0d0d8; border-radius: 6px; outline: none; }
   .q-input:focus { border-color: #4a5ae8; }
+  /* Range slider thumb */
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #4a5ae8; cursor: pointer; border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #4a5ae8; cursor: pointer; border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
 </style>
 </head>
 <body>
@@ -350,32 +362,65 @@ function SurveyScreen({ taskIndex, totalTasks, onSubmit }) {
   );
 }
 
+const TLX_SCALES = [
+  { id: "mental", label: "Mental Demand", low: "Very Low", high: "Very High",
+    desc: "How much mental and perceptual activity was required? Was the task easy or demanding, simple or complex?" },
+  { id: "temporal", label: "Temporal Demand", low: "Very Low", high: "Very High",
+    desc: "How much time pressure did you feel due to the pace at which the tasks or task elements occurred?" },
+  { id: "performance", label: "Performance", low: "Perfect", high: "Failure",
+    desc: "How successful were you in accomplishing what you were asked to do? How satisfied were you with your performance?" },
+  { id: "effort", label: "Effort", low: "Very Low", high: "Very High",
+    desc: "How hard did you have to work mentally to accomplish your level of performance?" },
+  { id: "frustration", label: "Frustration", low: "Very Low", high: "Very High",
+    desc: "How irritated, stressed, and annoyed versus content, relaxed, and complacent did you feel during the task?" },
+];
+
+function TlxSlider({ scale, value, onChange }) {
+  const ticks = [];
+  for (var t = 0; t <= 100; t += 5) ticks.push(t);
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
+        <span style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e" }}>{scale.label}</span>
+        {value != null && <span style={{ fontSize: 13, fontWeight: 600, color: "#4a5ae8" }}>{value}</span>}
+      </div>
+      <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 12 }}>{scale.desc}</p>
+      <div style={{ position: "relative", padding: "0 0 20px 0" }}>
+        <input type="range" min="0" max="100" step="5" value={value != null ? value : 50}
+          onChange={e => onChange(Number(e.target.value))}
+          style={{
+            width: "100%", height: 6, appearance: "none", WebkitAppearance: "none",
+            background: value != null
+              ? "linear-gradient(to right, #4a5ae8 " + value + "%, #e0e0e8 " + value + "%)"
+              : "#e0e0e8",
+            borderRadius: 3, outline: "none", cursor: "pointer",
+          }} />
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
+          <span style={{ fontSize: 11, color: "#888" }}>{scale.low}</span>
+          <span style={{ fontSize: 11, color: "#888" }}>{scale.high}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function FinalSurveyScreen({ onSubmit }) {
-  const [ratings, setRatings] = useState({});
+  const [tlx, setTlx] = useState({});
   const [feedback, setFeedback] = useState("");
-  const demandLabels = ["Very Low", "Low", "Moderate", "High", "Very High"];
+
+  const setScale = (id, val) => setTlx(p => ({ ...p, [id]: val }));
+  const allAnswered = TLX_SCALES.every(s => tlx[s.id] != null);
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 24px" }}>
-      <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 24 }}>Final Survey</h2>
-      <div style={{ marginBottom: 28 }}>
-        <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>Some specifications were more helpful than others.</p>
-        <div className="likert-group">
-          {LIKERT_LABELS.map((l, i) => (
-            <button key={i} className={"likert-btn" + (ratings.comparative === i + 1 ? " active" : "")}
-              onClick={() => setRatings(p => ({ ...p, comparative: i + 1 }))}>{l}</button>
-          ))}
-        </div>
-      </div>
-      <div style={{ marginBottom: 28 }}>
-        <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>Overall, how mentally demanding was this study?</p>
-        <div className="likert-group">
-          {demandLabels.map((l, i) => (
-            <button key={i} className={"likert-btn" + (ratings.demand === i + 1 ? " active" : "")}
-              onClick={() => setRatings(p => ({ ...p, demand: i + 1 }))}>{l}</button>
-          ))}
-        </div>
-      </div>
+    <div style={{ maxWidth: 640, margin: "0 auto", padding: "48px 24px" }}>
+      <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6 }}>Task Load Assessment</h2>
+      <p style={{ fontSize: 14, color: "#666", lineHeight: 1.6, marginBottom: 28 }}>
+        Rate your experience across the entire study on each of the following scales.
+        Drag each slider to the point that best represents your experience.
+      </p>
+      {TLX_SCALES.map(s => (
+        <TlxSlider key={s.id} scale={s} value={tlx[s.id]} onChange={v => setScale(s.id, v)} />
+      ))}
       <div style={{ marginBottom: 28 }}>
         <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>Any additional comments or feedback? (Optional)</p>
         <textarea value={feedback} onChange={e => setFeedback(e.target.value)} rows={4}
@@ -383,8 +428,8 @@ function FinalSurveyScreen({ onSubmit }) {
           placeholder="Share any thoughts about the study experience..." />
       </div>
       <button className="btn-primary" style={{ padding: "10px 28px", fontSize: 14 }}
-        disabled={!ratings.comparative || !ratings.demand}
-        onClick={() => onSubmit({ ...ratings, feedback })}>
+        disabled={!allAnswered}
+        onClick={() => onSubmit({ tlx, feedback })}>
         Submit Study →
       </button>
     </div>
