@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Code Specification Comprehension Study</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #fff; }
+  code, .mono { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
+  /* Spec markdown rendering */
+  .spec-panel h2 { font-size: 20px; font-weight: 700; margin: 20px 0 8px; }
+  .spec-panel h3 { font-size: 16px; font-weight: 600; margin: 18px 0 6px; color: #3a3a5e; }
+  .spec-panel h4 { font-size: 14px; font-weight: 600; margin: 14px 0 4px; }
+  .spec-panel p { margin: 4px 0; font-size: 14px; line-height: 1.75; }
+  .spec-panel .bullet { margin: 2px 0 2px 16px; font-size: 14px; }
+  .spec-panel .example-line { margin: 4px 0; font-family: 'SF Mono', monospace; font-size: 13px; background: #eee; padding: 4px 8px; border-radius: 4px; }
+  .spec-panel .spacer { height: 8px; }
+  /* Likert buttons */
+  .likert-group { display: flex; }
+  .likert-btn { flex: 1; padding: 10px 4px; font-size: 12px; cursor: pointer; border: 1px solid #d0d0d8; background: #fff; color: #555; transition: all 0.15s; font-family: inherit; }
+  .likert-btn:first-child { border-radius: 8px 0 0 8px; }
+  .likert-btn:last-child { border-radius: 0 8px 8px 0; }
+  .likert-btn:not(:first-child) { margin-left: -1px; }
+  .likert-btn.active { background: #4a5ae8; color: #fff; border-color: #4a5ae8; font-weight: 600; }
+  /* Primary button */
+  .btn-primary { background: #4a5ae8; color: #fff; border: none; border-radius: 8px; padding: 12px 32px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+  /* Question card */
+  .q-card { margin-bottom: 16px; padding: 14px 16px; border-radius: 8px; border: 1px solid #e0e0e8; background: #fafafe; transition: border-color 0.2s; }
+  .q-card.answered { border-color: #c0d8c0; background: #fcfefc; }
+  .q-input { width: 100%; padding: 8px 10px; font-size: 14px; font-family: 'SF Mono', monospace; border: 1px solid #d0d0d8; border-radius: 6px; outline: none; }
+  .q-input:focus { border-color: #4a5ae8; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useRef } = React;
+
+/* ──────────────────── TASK DATA ──────────────────── */
+const TASKS = [
+  {
+    id: "word_wrap",
+    conditionLabel: "Detailed Spec",
+    spec: [
+      { type: "h2", text: "fn(text, width) — Function Specification" },
+      { type: "h3", text: "1. Synopsis" },
+      { type: "p", text: "fn(text, width)" },
+      { type: "bullet", text: "text: Input string containing text to wrap" },
+      { type: "bullet", text: "width: Integer maximum line width for wrapped output" },
+      { type: "spacer" },
+      { type: "p", text: "The function returns a wrapped version of the input text where each line does not exceed the specified width. Words are separated by single spaces and lines are separated by newline characters." },
+      { type: "h3", text: "2. Description" },
+      { type: "p", text: "The fn function processes an input string by:" },
+      { type: "bullet", text: "Splitting the text into words using any sequence of whitespace as a delimiter." },
+      { type: "bullet", text: "Building lines by appending words, ensuring the total length of the line (including spaces) does not exceed the specified width." },
+      { type: "bullet", text: "Placing a word on its own line if it cannot be included in the current line without exceeding the width." },
+      { type: "bullet", text: "Returning lines joined with newline characters, with no trailing space or newline." },
+      { type: "spacer" },
+      { type: "p", text: "Key behavior rules:" },
+      { type: "bullet", text: "The first word on a line is always added, even if it exceeds the width." },
+      { type: "bullet", text: "Words are trimmed of internal whitespace but preserved otherwise." },
+      { type: "bullet", text: "Lines are compacted to eliminate extra spaces between words." },
+      { type: "h3", text: "3. Output Format" },
+      { type: "bullet", text: "Lines are formed from one or more words separated by a single space." },
+      { type: "bullet", text: "Lines are separated by a newline character (\\n) with no trailing whitespace." },
+      { type: "bullet", text: "Empty input or input with only whitespace returns an empty string." },
+      { type: "spacer" },
+      { type: "h4", text: "Line Construction Rules:" },
+      { type: "p", text: "1. Start a new line with the first word." },
+      { type: "p", text: "2. For each subsequent word:" },
+      { type: "bullet", text: "If adding the word (with a space) keeps the line within the width, include it." },
+      { type: "bullet", text: "If the word would cause the line to exceed the width, start a new line with that word." },
+      { type: "spacer" },
+      { type: "h4", text: "Edge Cases:" },
+      { type: "bullet", text: "A single word longer than the width appears on its own line (not split)." },
+      { type: "bullet", text: "Empty input or input with only whitespace returns an empty string \"\"." },
+      { type: "bullet", text: "Width of 0 causes each word to appear on its own line." },
+      { type: "h3", text: "4. Examples" },
+      { type: "example", text: "fn(\"hello world this is a test\", 10) → \"hello\\nworld this\\nis a test\"" },
+      { type: "example", text: "fn(\"verylongword\", 5) → \"verylongword\"" },
+      { type: "example", text: "fn(\"\", 80) → \"\"" },
+      { type: "example", text: "fn(\"hello   world\", 10) → \"hello world\"" },
+      { type: "example", text: "fn(\"one two three\", 3) → \"one\\ntwo\\nthree\"" },
+      { type: "example", text: "fn(\"a b\", 0) → \"a\\nb\"" },
+    ],
+    questions: [
+      { id: "q1", prompt: 'fn("cat dog", 7)' },
+      { id: "q2", prompt: 'fn("cat bird", 7)' },
+      { id: "q3", prompt: 'fn("x y z", 3)' },
+      { id: "q4", prompt: 'fn("foo\\tbar", 10)' },
+      { id: "q5", prompt: 'fn("one  two", 10)' },
+      { id: "q6", prompt: 'fn("  \\t \\n ", 5)' },
+      { id: "q7", prompt: 'fn("extraordinarily big", 6)' },
+      { id: "q8", prompt: 'fn("go far\\naway now", 12)' },
+      { id: "q9", prompt: 'fn("test", 10)' },
+      { id: "q10", prompt: 'fn("ab cd ef gh", 5)' },
+    ],
+  },
+  {
+    id: "merge_intervals",
+    conditionLabel: "Vague Spec",
+    spec: [
+      { type: "h2", text: "fn(intervals) — Function Specification" },
+      { type: "h3", text: "Synopsis" },
+      { type: "p", text: "fn(intervals)" },
+      { type: "bullet", text: "intervals: A list of intervals, where each interval is a list of two integers [start, end]." },
+      { type: "spacer" },
+      { type: "p", text: "The function takes a list of intervals and returns a new list where overlapping intervals have been combined." },
+      { type: "h3", text: "Description" },
+      { type: "p", text: "The function merges intervals that overlap with each other. Two intervals overlap if one starts before the other ends. The returned list should be sorted by start value." },
+      { type: "h3", text: "Example" },
+      { type: "example", text: "fn([[1,3],[2,6],[8,10],[15,18]]) → [[1,6],[8,10],[15,18]]" },
+    ],
+    questions: [
+      { id: "q1", prompt: "fn([[1,4],[4,5]])" },
+      { id: "q2", prompt: "fn([[1,3],[5,7]])" },
+      { id: "q3", prompt: "fn([[1,10],[2,3],[4,6]])" },
+      { id: "q4", prompt: "fn([[5,8],[1,3]])" },
+      { id: "q5", prompt: "fn([[1,2]])" },
+      { id: "q6", prompt: "fn([[1,5],[2,3]])" },
+      { id: "q7", prompt: "fn([])" },
+      { id: "q8", prompt: "fn([[1,3],[3,5],[5,7]])" },
+    ],
+  },
+];
+
+const LIKERT_LABELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
+const LIKERT_QUESTIONS = [
+  { id: "clarity", text: "The specification clearly described what the program was supposed to do." },
+  { id: "sufficiency", text: "The specification provided enough information to answer the questions." },
+  { id: "confidence", text: "I felt confident in my answers for this task." },
+];
+
+/* ──────────────────── COMPONENTS ──────────────────── */
+
+function SpecRenderer({ blocks }) {
+  return blocks.map((b, i) => {
+    if (b.type === "h2") return <h2 key={i}>{b.text}</h2>;
+    if (b.type === "h3") return <h3 key={i}>{b.text}</h3>;
+    if (b.type === "h4") return <h4 key={i}>{b.text}</h4>;
+    if (b.type === "bullet") return <p key={i} className="bullet">• {b.text}</p>;
+    if (b.type === "example") return <div key={i} className="example-line">{b.text}</div>;
+    if (b.type === "spacer") return <div key={i} className="spacer" />;
+    return <p key={i}>{b.text}</p>;
+  });
+}
+
+function WelcomeScreen({ onStart }) {
+  return (
+    <div style={{ maxWidth: 680, margin: "0 auto", padding: "48px 24px" }}>
+      <h1 style={{ fontSize: 26, fontWeight: 700, marginBottom: 8 }}>Code Specification Comprehension Study</h1>
+      <p style={{ color: "#555", fontSize: 15, lineHeight: 1.7, marginBottom: 24 }}>
+        Thank you for participating in this study. You will complete a series of tasks where you read a specification
+        describing a Python function, then predict the exact output of that function for several given inputs.
+      </p>
+      <div style={{ background: "#f4f4f8", borderRadius: 10, padding: "20px 24px", marginBottom: 28, border: "1px solid #e0e0e8" }}>
+        <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 10 }}>How it works</h3>
+        <p style={{ fontSize: 14, lineHeight: 1.7, color: "#555" }}>
+          For each task, you'll see a specification on the left side of the screen and prediction questions on the right.
+          Read the specification carefully, then type the exact output the function would return for each input.
+          Use <code className="mono" style={{ background: "#e8e8f0", padding: "1px 5px", borderRadius: 3, fontSize: 13 }}>\n</code> to
+          represent newline characters in your answers. After each task, you'll answer a brief survey about the specification.
+          There are <strong>2 tasks</strong> in this prototype demo.
+        </p>
+      </div>
+      <div style={{ background: "#fff8e6", borderRadius: 10, padding: "16px 20px", marginBottom: 28, border: "1px solid #f0e0a0" }}>
+        <p style={{ fontSize: 13, color: "#7a6a20", lineHeight: 1.6 }}>
+          <strong>Note:</strong> This study is evaluating the quality of AI-generated specifications, not your programming ability.
+          There's no penalty for incorrect answers.
+        </p>
+      </div>
+      <button className="btn-primary" onClick={onStart}>Begin Study</button>
+    </div>
+  );
+}
+
+function TaskScreen({ task, taskIndex, totalTasks, onSubmit }) {
+  const [answers, setAnswers] = useState({});
+  const startTime = useRef(Date.now());
+  const qTimes = useRef({});
+
+  const setAnswer = (qId, val) => {
+    if (!qTimes.current[qId]) qTimes.current[qId] = Date.now();
+    setAnswers(prev => ({ ...prev, [qId]: val }));
+  };
+
+  const answeredCount = Object.values(answers).filter(v => v && v.trim() !== "").length;
+
+  const handleSubmit = () => {
+    onSubmit({
+      taskId: task.id,
+      condition: task.conditionLabel,
+      answers,
+      totalTimeMs: Date.now() - startTime.current,
+      questionFirstInteraction: qTimes.current,
+      submittedAt: new Date().toISOString(),
+    });
+  };
+
+  return (
+    <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+      {/* Spec */}
+      <div className="spec-panel" style={{
+        width: "50%", overflowY: "auto", padding: "24px 28px",
+        borderRight: "1px solid #e0e0e8", background: "#f8f8fc",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <span style={{ fontSize: 12, fontWeight: 600, color: "#4a5ae8", textTransform: "uppercase", letterSpacing: 1 }}>
+            Specification — Task {taskIndex + 1} of {totalTasks}
+          </span>
+          <span style={{
+            fontSize: 11, padding: "3px 10px", borderRadius: 20, fontWeight: 600,
+            background: task.conditionLabel === "Detailed Spec" ? "#e0f0e0" : "#f0e0e0",
+            color: task.conditionLabel === "Detailed Spec" ? "#2a7a2a" : "#8a3a3a",
+          }}>
+            {task.conditionLabel}
+          </span>
+        </div>
+        <SpecRenderer blocks={task.spec} />
+      </div>
+      {/* Questions */}
+      <div style={{ width: "50%", overflowY: "auto", padding: "24px 28px", background: "#fff" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <h3 style={{ fontSize: 16, fontWeight: 600 }}>Prediction Questions</h3>
+          <span style={{ fontSize: 13, color: "#888" }}>{answeredCount}/{task.questions.length} answered</span>
+        </div>
+        <p style={{ fontSize: 13, color: "#777", marginBottom: 20, lineHeight: 1.6 }}>
+          Predict the exact output of each function call. Use <code className="mono" style={{ background: "#f0f0f4", padding: "1px 4px", borderRadius: 3 }}>\n</code> for newlines.
+          Leave the field empty if the output is an empty string.
+        </p>
+        {task.questions.map((q, i) => (
+          <div key={q.id} className={"q-card" + ((answers[q.id] || "").trim() ? " answered" : "")}>
+            <label style={{ fontSize: 13, fontWeight: 600, color: "#3a3a5e", display: "block", marginBottom: 6 }}>Q{i + 1}</label>
+            <code className="mono" style={{ fontSize: 13, display: "block", marginBottom: 10, background: "#f0f0f8", padding: "6px 10px", borderRadius: 4 }}>
+              {q.prompt}
+            </code>
+            <input
+              className="q-input"
+              type="text"
+              value={answers[q.id] || ""}
+              onChange={e => setAnswer(q.id, e.target.value)}
+              placeholder="Type exact output here..."
+            />
+          </div>
+        ))}
+        <div style={{ marginTop: 24, paddingTop: 16, borderTop: "1px solid #e8e8f0", display: "flex", justifyContent: "flex-end" }}>
+          <button className="btn-primary" style={{ padding: "10px 28px", fontSize: 14 }} onClick={handleSubmit}>
+            Submit Answers →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SurveyScreen({ taskIndex, totalTasks, onSubmit }) {
+  const [ratings, setRatings] = useState({});
+  const allAnswered = LIKERT_QUESTIONS.every(q => ratings[q.id] != null);
+
+  return (
+    <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 24px" }}>
+      <span style={{ fontSize: 12, fontWeight: 600, color: "#4a5ae8", textTransform: "uppercase", letterSpacing: 1 }}>
+        Task {taskIndex + 1} of {totalTasks} — Survey
+      </span>
+      <h2 style={{ fontSize: 22, fontWeight: 700, margin: "8px 0 24px" }}>How was that specification?</h2>
+      {LIKERT_QUESTIONS.map(q => (
+        <div key={q.id} style={{ marginBottom: 28 }}>
+          <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>{q.text}</p>
+          <div className="likert-group">
+            {LIKERT_LABELS.map((label, i) => (
+              <button key={i} className={"likert-btn" + (ratings[q.id] === i + 1 ? " active" : "")}
+                onClick={() => setRatings(prev => ({ ...prev, [q.id]: i + 1 }))}>
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+      <button className="btn-primary" style={{ padding: "10px 28px", fontSize: 14 }} disabled={!allAnswered} onClick={() => onSubmit(ratings)}>
+        {taskIndex < totalTasks - 1 ? "Next Task →" : "Continue to Final Survey →"}
+      </button>
+    </div>
+  );
+}
+
+function FinalSurveyScreen({ onSubmit }) {
+  const [ratings, setRatings] = useState({});
+  const [feedback, setFeedback] = useState("");
+  const demandLabels = ["Very Low", "Low", "Moderate", "High", "Very High"];
+
+  return (
+    <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 24px" }}>
+      <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 24 }}>Final Survey</h2>
+      <div style={{ marginBottom: 28 }}>
+        <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>Some specifications were more helpful than others.</p>
+        <div className="likert-group">
+          {LIKERT_LABELS.map((l, i) => (
+            <button key={i} className={"likert-btn" + (ratings.comparative === i + 1 ? " active" : "")}
+              onClick={() => setRatings(p => ({ ...p, comparative: i + 1 }))}>{l}</button>
+          ))}
+        </div>
+      </div>
+      <div style={{ marginBottom: 28 }}>
+        <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>Overall, how mentally demanding was this study?</p>
+        <div className="likert-group">
+          {demandLabels.map((l, i) => (
+            <button key={i} className={"likert-btn" + (ratings.demand === i + 1 ? " active" : "")}
+              onClick={() => setRatings(p => ({ ...p, demand: i + 1 }))}>{l}</button>
+          ))}
+        </div>
+      </div>
+      <div style={{ marginBottom: 28 }}>
+        <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>Any additional comments or feedback? (Optional)</p>
+        <textarea value={feedback} onChange={e => setFeedback(e.target.value)} rows={4}
+          style={{ width: "100%", padding: "10px 12px", fontSize: 14, borderRadius: 8, border: "1px solid #d0d0d8", outline: "none", resize: "vertical", fontFamily: "inherit", boxSizing: "border-box" }}
+          placeholder="Share any thoughts about the study experience..." />
+      </div>
+      <button className="btn-primary" style={{ padding: "10px 28px", fontSize: 14 }}
+        disabled={!ratings.comparative || !ratings.demand}
+        onClick={() => onSubmit({ ...ratings, feedback })}>
+        Submit Study →
+      </button>
+    </div>
+  );
+}
+
+function CompletionScreen({ data }) {
+  const [showData, setShowData] = useState(false);
+  return (
+    <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 24px" }}>
+      <div style={{ textAlign: "center", marginBottom: 32 }}>
+        <div style={{ fontSize: 48, marginBottom: 12, color: "#2a7a2a" }}>✓</div>
+        <h2 style={{ fontSize: 22, fontWeight: 700 }}>Study Complete</h2>
+        <p style={{ color: "#666", fontSize: 15, lineHeight: 1.6, marginTop: 8 }}>Thank you for participating. Your responses have been recorded.</p>
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <button onClick={() => setShowData(!showData)} style={{
+          background: "none", border: "1px solid #d0d0d8", borderRadius: 8,
+          padding: "8px 20px", fontSize: 13, cursor: "pointer", color: "#555", fontFamily: "inherit",
+        }}>
+          {showData ? "Hide" : "Show"} Raw Response Data (Demo)
+        </button>
+      </div>
+      {showData && (
+        <pre style={{
+          marginTop: 16, background: "#f4f4f8", padding: 16, borderRadius: 8,
+          fontSize: 11, overflow: "auto", maxHeight: 400, lineHeight: 1.5, border: "1px solid #e0e0e8",
+        }}>
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      )}
+    </div>
+  );
+}
+
+/* ──────────────────── APP ──────────────────── */
+
+function App() {
+  const [phase, setPhase] = useState("welcome");
+  const [taskIndex, setTaskIndex] = useState(0);
+  const [allData, setAllData] = useState({ tasks: [], surveys: [], finalSurvey: null, startedAt: null });
+
+  const startStudy = () => {
+    setAllData(p => ({ ...p, startedAt: new Date().toISOString() }));
+    setPhase("task");
+  };
+
+  const submitTask = (taskData) => {
+    setAllData(p => ({ ...p, tasks: [...p.tasks, taskData] }));
+    setPhase("survey");
+  };
+
+  const submitSurvey = (surveyData) => {
+    setAllData(p => ({ ...p, surveys: [...p.surveys, { taskId: TASKS[taskIndex].id, ...surveyData }] }));
+    if (taskIndex < TASKS.length - 1) {
+      setTaskIndex(taskIndex + 1);
+      setPhase("task");
+    } else {
+      setPhase("finalSurvey");
+    }
+  };
+
+  const submitFinal = (finalData) => {
+    const complete = { ...allData, finalSurvey: finalData, completedAt: new Date().toISOString() };
+    setAllData(complete);
+    setPhase("complete");
+    // In production, POST complete to your backend here
+    console.log("STUDY DATA:", JSON.stringify(complete, null, 2));
+  };
+
+  if (phase === "welcome") return <WelcomeScreen onStart={startStudy} />;
+  if (phase === "task") return <TaskScreen task={TASKS[taskIndex]} taskIndex={taskIndex} totalTasks={TASKS.length} onSubmit={submitTask} />;
+  if (phase === "survey") return <SurveyScreen taskIndex={taskIndex} totalTasks={TASKS.length} onSubmit={submitSurvey} />;
+  if (phase === "finalSurvey") return <FinalSurveyScreen onSubmit={submitFinal} />;
+  if (phase === "complete") return <CompletionScreen data={allData} />;
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+</script>
+</body>
+</html>
