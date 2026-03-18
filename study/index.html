@@ -199,6 +199,67 @@ const TASKS = [
       { id: "q8", prompt: "fn(703)" },
     ],
   },
+  {
+    id: "look_and_say",
+    spec: [
+      { type: "h2", text: "fn(s) — Function Specification" },
+      { type: "h3", text: "1. Synopsis" },
+      { type: "bullet", text: "s: A string representing the input sequence of characters." },
+      { type: "p", text: "Return Value: A string representing the compressed description of consecutive character groups in the input." },
+      { type: "h3", text: "2. Description" },
+      { type: "p", text: "The function implements a run-length encoding system specifically tailored to process a string of characters. It operates by scanning the input string from the beginning to the end to identify contiguous sequences of identical characters. For every sequence found, the function generates a token consisting of the count of characters in that sequence followed immediately by the character itself. These tokens are then concatenated in the order they appear in the original string to form the final output." },
+      { type: "spacer" },
+      { type: "p", text: "The logic treats all characters equally, meaning letters, digits, symbols, and whitespace are processed using the same rules. The function is case-sensitive, so uppercase and lowercase versions of the same letter are considered distinct characters and will not be grouped together. Additionally, the counting mechanism uses standard decimal representation for the counts, so a sequence of ten identical characters will result in the digits one and zero appearing in the output before the character." },
+      { type: "spacer" },
+      { type: "p", text: "The output preserves the relative order of the character groups found in the input. If a character appears in multiple separate groups within the input string, each group is encoded independently and sequentially in the result. This ensures that the structure of the original string is reflected in the order of the encoded groups, even though the characters themselves are interspersed with their frequency counts." },
+      { type: "h3", text: "3. Edge Cases and Special Behaviors" },
+      { type: "table", headers: ["Input Condition", "Behavioral Rule"], rows: [
+        ["Empty or False-y Input", "If the input string is empty or evaluates to false, the function returns an empty string immediately without processing."],
+        ["Single Character Input", "If the input contains exactly one character, the output consists of the digit one followed by that character."],
+        ["Uniform Character Sequence", "If the input consists of the same character repeated multiple times, the output consists of the total count of that character followed by the character itself."],
+        ["Alternating Characters", "If the input consists of characters that never repeat consecutively (e.g., \"abc\"), every character is prefixed with the digit one in the output."],
+        ["Mixed Sequences", "If the input contains multiple groups of different characters, the output is a concatenation of the count and character for each group, maintaining the original sequence order."],
+        ["Digit Characters", "If the input contains numeric digits, they are treated as regular characters to be counted, not as numbers to be calculated."],
+      ]},
+      { type: "h3", text: "4. Error Handling" },
+      { type: "table", headers: ["Condition", "Behavior"], rows: [
+        ["Non-String, Truthy Input", "If the input is not a string but is truthy, the function will raise a runtime error."],
+        ["Non-String, False-y Input", "If the input is not a string but evaluates to false (e.g., None, 0, False), the function returns an empty string."],
+      ]},
+      { type: "h3", text: "5. Concrete Examples" },
+      { type: "example-block", label: "Example 1", lines: [
+        "Input: fn(\"aabbc\")",
+        "Output: \"2a2b1c\"",
+        "Reasoning: The input contains two consecutive \"a\"s, followed by two consecutive \"b\"s, followed by one \"c\". Each group is encoded as its count followed by the character.",
+      ]},
+      { type: "example-block", label: "Example 2", lines: [
+        "Input: fn(\"z\")",
+        "Output: \"1z\"",
+        "Reasoning: The input consists of a single character \"z\". Since it appears once, the count is one, resulting in the digit one followed by the character \"z\".",
+      ]},
+      { type: "example-block", label: "Example 3", lines: [
+        "Input: fn(\"Aa\")",
+        "Output: \"1A1a\"",
+        "Reasoning: The input contains an uppercase \"A\" and a lowercase \"a\". Because the function is case-sensitive, these are treated as two distinct groups of one character each.",
+      ]},
+      { type: "h3", text: "6. Implementation Warnings" },
+      { type: "table", headers: ["Problem", "Correct Behavior", "Verification"], rows: [
+        ["Global vs. Consecutive Counting", "A common mistake is to count the total occurrences of a character in the entire string. The function only counts consecutive occurrences.", "Input \"aba\" returns \"1a1b1a\", not \"2a1b\"."],
+        ["Digit Interpretation", "A common mistake is to treat digits in the input as numeric values. The function treats all characters, including digits, as symbols to be counted.", "Input \"11\" returns \"21\" (two ones), not a numeric calculation."],
+        ["Case Sensitivity", "A common mistake is to assume case is ignored. The function distinguishes between uppercase and lowercase letters.", "Input \"Aa\" returns \"1A1a\", not \"2A\"."],
+      ]},
+    ],
+    questions: [
+      { id: "q1", prompt: 'fn("aaaa")' },
+      { id: "q2", prompt: 'fn("abc")' },
+      { id: "q3", prompt: 'fn("")' },
+      { id: "q4", prompt: 'fn("xxxyyz")' },
+      { id: "q5", prompt: 'fn("aAaA")' },
+      { id: "q6", prompt: 'fn("   ")' },
+      { id: "q7", prompt: 'fn("112233")' },
+      { id: "q8", prompt: 'fn("1")' },
+    ],
+  },
 ];
 
 const LIKERT_LABELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
