@@ -11,7 +11,6 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #fff; }
   code, .mono { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
-  /* Spec markdown rendering */
   .spec-panel h2 { font-size: 20px; font-weight: 700; margin: 20px 0 8px; }
   .spec-panel h3 { font-size: 16px; font-weight: 600; margin: 18px 0 6px; color: #3a3a5e; }
   .spec-panel h4 { font-size: 14px; font-weight: 600; margin: 14px 0 4px; }
@@ -19,17 +18,20 @@
   .spec-panel .bullet { margin: 2px 0 2px 16px; font-size: 14px; }
   .spec-panel .example-line { margin: 4px 0; font-family: 'SF Mono', monospace; font-size: 13px; background: #eee; padding: 4px 8px; border-radius: 4px; }
   .spec-panel .spacer { height: 8px; }
-  /* Likert buttons */
+  .spec-panel .table-wrap { margin: 10px 0; overflow-x: auto; }
+  .spec-panel table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  .spec-panel th, .spec-panel td { border: 1px solid #d0d0d8; padding: 8px 10px; text-align: left; }
+  .spec-panel th { background: #eeeef4; font-weight: 600; }
+  .spec-panel .example-block { margin: 10px 0 14px 0; padding: 10px 14px; background: #f4f4f8; border-radius: 6px; border: 1px solid #e0e0e8; }
+  .spec-panel .example-block p { margin: 2px 0; font-size: 13px; }
   .likert-group { display: flex; }
   .likert-btn { flex: 1; padding: 10px 4px; font-size: 12px; cursor: pointer; border: 1px solid #d0d0d8; background: #fff; color: #555; transition: all 0.15s; font-family: inherit; }
   .likert-btn:first-child { border-radius: 8px 0 0 8px; }
   .likert-btn:last-child { border-radius: 0 8px 8px 0; }
   .likert-btn:not(:first-child) { margin-left: -1px; }
   .likert-btn.active { background: #4a5ae8; color: #fff; border-color: #4a5ae8; font-weight: 600; }
-  /* Primary button */
   .btn-primary { background: #4a5ae8; color: #fff; border: none; border-radius: 8px; padding: 12px 32px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; }
   .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
-  /* Question card */
   .q-card { margin-bottom: 16px; padding: 14px 16px; border-radius: 8px; border: 1px solid #e0e0e8; background: #fafafe; transition: border-color 0.2s; }
   .q-card.answered { border-color: #c0d8c0; background: #fcfefc; }
   .q-input { width: 100%; padding: 8px 10px; font-size: 14px; font-family: 'SF Mono', monospace; border: 1px solid #d0d0d8; border-radius: 6px; outline: none; }
@@ -45,7 +47,6 @@ const { useState, useRef } = React;
 const TASKS = [
   {
     id: "word_wrap",
-    conditionLabel: "Detailed Spec",
     spec: [
       { type: "h2", text: "fn(text, width) — Function Specification" },
       { type: "h3", text: "1. Synopsis" },
@@ -103,7 +104,6 @@ const TASKS = [
   },
   {
     id: "merge_intervals",
-    conditionLabel: "Vague Spec",
     spec: [
       { type: "h2", text: "fn(intervals) — Function Specification" },
       { type: "h3", text: "Synopsis" },
@@ -127,6 +127,66 @@ const TASKS = [
       { id: "q8", prompt: "fn([[1,3],[3,5],[5,7]])" },
     ],
   },
+  {
+    id: "column_to_label",
+    spec: [
+      { type: "h2", text: "fn(n) — Function Specification" },
+      { type: "h3", text: "Synopsis" },
+      { type: "p", text: "fn(n)" },
+      { type: "bullet", text: "n (integer): A numeric input representing a position in a bijective base-26 sequence." },
+      { type: "p", text: "Return Value: A string of uppercase English letters corresponding to the input position." },
+      { type: "h3", text: "Description" },
+      { type: "p", text: "The function fn implements a bijective base-26 numbering system, commonly used for labeling columns in spreadsheet applications. It maps positive integers to sequences of uppercase letters from A to Z. In this system, there is no zero digit; instead, the sequence begins at 1. The number 1 maps to the letter A, 2 maps to B, continuing until 26 maps to Z. When the input exceeds 26, the system rolls over to multi-letter combinations, where 27 maps to AA, 28 maps to AB, and so on. This rollover behaves similarly to how odometers work, but using a 26-symbol alphabet starting from 1 rather than 0." },
+      { type: "spacer" },
+      { type: "p", text: "The function treats the input as a 1-based index. If the input is zero or negative, the function does not produce a letter sequence and instead returns an empty string. For any positive integer, the output is constructed by determining the corresponding letter for the current position in the sequence, then moving to the next higher position value for the next letter in the string. The letters are ordered from left to right, corresponding to the most significant digit to the least significant digit in the bijective base-26 representation. The output always consists of uppercase English letters only, with no separators or spaces between them." },
+      { type: "h3", text: "Edge Cases and Special Behaviors" },
+      { type: "table", headers: ["Input Condition", "Behavior"], rows: [
+        ["Input is zero or negative", "Returns an empty string"],
+        ["Input is within the single-letter range (1 through 26)", "Returns a single uppercase letter corresponding to the position (A through Z)"],
+        ["Input exceeds the single-letter range", "Returns a multi-letter string determined by the bijective base-26 system"],
+        ["Input is a non-integer type", "Raises a type error"],
+      ]},
+      { type: "h3", text: "Error Handling" },
+      { type: "table", headers: ["Condition", "Behavior"], rows: [
+        ["Input is not an integer (e.g., float, string, None)", "Raises a TypeError"],
+        ["Input is a negative integer", "Returns an empty string (no error raised)"],
+        ["Input is zero", "Returns an empty string (no error raised)"],
+      ]},
+      { type: "h3", text: "Concrete Examples" },
+      { type: "example-block", label: "Example 1", lines: [
+        "Input: fn(1)",
+        "Output: \"A\"",
+        "Reasoning: The input is the first position in the sequence. In the bijective base-26 system, the first position maps directly to the first letter of the alphabet, which is A.",
+      ]},
+      { type: "example-block", label: "Example 2", lines: [
+        "Input: fn(26)",
+        "Output: \"Z\"",
+        "Reasoning: The input represents the twenty-sixth position. Since there are exactly 26 letters in the alphabet, the maximum single-letter value maps to the last letter, Z.",
+      ]},
+      { type: "example-block", label: "Example 3", lines: [
+        "Input: fn(27)",
+        "Output: \"AA\"",
+        "Reasoning: The input exceeds the single-letter range of 26. The system rolls over to two letters. The first position of the new cycle corresponds to A, and the second position also corresponds to A, resulting in the string AA.",
+      ]},
+      { type: "h3", text: "Implementation Warnings" },
+      { type: "table", headers: ["Problem", "Correct Behavior", "Verification"], rows: [
+        ["Assuming standard base-26 (0-based)", "The system is bijective (1-based), meaning there is no zero digit. The letter A represents 1, not 0.", "fn(1) returns \"A\", not an empty string or a zero-equivalent."],
+        ["Expecting 0 to return \"A\"", "The input 0 is treated as a boundary condition that yields no output.", "fn(0) returns \"\" (empty string)."],
+        ["Confusing case sensitivity", "The output is strictly uppercase. Lowercase inputs or expectations of lowercase output are incorrect.", "fn(1) returns \"A\", not \"a\"."],
+        ["Assuming standard division logic", "The conversion logic does not use standard modulo arithmetic where 26 would map to a zero-like state.", "fn(26) returns \"Z\", not a multi-letter sequence starting with a zero-equivalent."],
+      ]},
+    ],
+    questions: [
+      { id: "q1", prompt: "fn(5)" },
+      { id: "q2", prompt: "fn(26)" },
+      { id: "q3", prompt: "fn(27)" },
+      { id: "q4", prompt: "fn(52)" },
+      { id: "q5", prompt: "fn(53)" },
+      { id: "q6", prompt: "fn(79)" },
+      { id: "q7", prompt: "fn(702)" },
+      { id: "q8", prompt: "fn(703)" },
+    ],
+  },
 ];
 
 const LIKERT_LABELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
@@ -146,6 +206,20 @@ function SpecRenderer({ blocks }) {
     if (b.type === "bullet") return <p key={i} className="bullet">• {b.text}</p>;
     if (b.type === "example") return <div key={i} className="example-line">{b.text}</div>;
     if (b.type === "spacer") return <div key={i} className="spacer" />;
+    if (b.type === "table") return (
+      <div key={i} className="table-wrap">
+        <table>
+          <thead><tr>{b.headers.map((h, j) => <th key={j}>{h}</th>)}</tr></thead>
+          <tbody>{b.rows.map((row, ri) => <tr key={ri}>{row.map((cell, ci) => <td key={ci}>{cell}</td>)}</tr>)}</tbody>
+        </table>
+      </div>
+    );
+    if (b.type === "example-block") return (
+      <div key={i} className="example-block">
+        <p style={{ fontWeight: 600, marginBottom: 4 }}>{b.label}</p>
+        {b.lines.map((line, li) => <p key={li}>{line}</p>)}
+      </div>
+    );
     return <p key={i}>{b.text}</p>;
   });
 }
@@ -165,7 +239,7 @@ function WelcomeScreen({ onStart }) {
           Read the specification carefully, then type the exact output the function would return for each input.
           Use <code className="mono" style={{ background: "#e8e8f0", padding: "1px 5px", borderRadius: 3, fontSize: 13 }}>\n</code> to
           represent newline characters in your answers. After each task, you'll answer a brief survey about the specification.
-          There are <strong>2 tasks</strong> in this prototype demo.
+          There are <strong>{TASKS.length} tasks</strong> in this demo.
         </p>
       </div>
       <div style={{ background: "#fff8e6", borderRadius: 10, padding: "16px 20px", marginBottom: 28, border: "1px solid #f0e0a0" }}>
@@ -194,7 +268,6 @@ function TaskScreen({ task, taskIndex, totalTasks, onSubmit }) {
   const handleSubmit = () => {
     onSubmit({
       taskId: task.id,
-      condition: task.conditionLabel,
       answers,
       totalTimeMs: Date.now() - startTime.current,
       questionFirstInteraction: qTimes.current,
@@ -204,26 +277,15 @@ function TaskScreen({ task, taskIndex, totalTasks, onSubmit }) {
 
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
-      {/* Spec */}
       <div className="spec-panel" style={{
         width: "50%", overflowY: "auto", padding: "24px 28px",
         borderRight: "1px solid #e0e0e8", background: "#f8f8fc",
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-          <span style={{ fontSize: 12, fontWeight: 600, color: "#4a5ae8", textTransform: "uppercase", letterSpacing: 1 }}>
-            Specification — Task {taskIndex + 1} of {totalTasks}
-          </span>
-          <span style={{
-            fontSize: 11, padding: "3px 10px", borderRadius: 20, fontWeight: 600,
-            background: task.conditionLabel === "Detailed Spec" ? "#e0f0e0" : "#f0e0e0",
-            color: task.conditionLabel === "Detailed Spec" ? "#2a7a2a" : "#8a3a3a",
-          }}>
-            {task.conditionLabel}
-          </span>
-        </div>
+        <span style={{ fontSize: 12, fontWeight: 600, color: "#4a5ae8", textTransform: "uppercase", letterSpacing: 1, display: "block", marginBottom: 16 }}>
+          Specification — Task {taskIndex + 1} of {totalTasks}
+        </span>
         <SpecRenderer blocks={task.spec} />
       </div>
-      {/* Questions */}
       <div style={{ width: "50%", overflowY: "auto", padding: "24px 28px", background: "#fff" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
           <h3 style={{ fontSize: 16, fontWeight: 600 }}>Prediction Questions</h3>
@@ -331,6 +393,15 @@ function FinalSurveyScreen({ onSubmit }) {
 
 function CompletionScreen({ data }) {
   const [showData, setShowData] = useState(false);
+  const downloadData = () => {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "study-response-" + (data.participantId || "demo") + ".json";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
   return (
     <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 24px" }}>
       <div style={{ textAlign: "center", marginBottom: 32 }}>
@@ -338,12 +409,18 @@ function CompletionScreen({ data }) {
         <h2 style={{ fontSize: 22, fontWeight: 700 }}>Study Complete</h2>
         <p style={{ color: "#666", fontSize: 15, lineHeight: 1.6, marginTop: 8 }}>Thank you for participating. Your responses have been recorded.</p>
       </div>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center", display: "flex", gap: 12, justifyContent: "center" }}>
         <button onClick={() => setShowData(!showData)} style={{
           background: "none", border: "1px solid #d0d0d8", borderRadius: 8,
           padding: "8px 20px", fontSize: 13, cursor: "pointer", color: "#555", fontFamily: "inherit",
         }}>
-          {showData ? "Hide" : "Show"} Raw Response Data (Demo)
+          {showData ? "Hide" : "Show"} Raw Data
+        </button>
+        <button onClick={downloadData} style={{
+          background: "#4a5ae8", border: "none", borderRadius: 8,
+          padding: "8px 20px", fontSize: 13, cursor: "pointer", color: "#fff", fontWeight: 600, fontFamily: "inherit",
+        }}>
+          Download JSON
         </button>
       </div>
       {showData && (
@@ -363,10 +440,13 @@ function CompletionScreen({ data }) {
 function App() {
   const [phase, setPhase] = useState("welcome");
   const [taskIndex, setTaskIndex] = useState(0);
-  const [allData, setAllData] = useState({ tasks: [], surveys: [], finalSurvey: null, startedAt: null });
+  const [allData, setAllData] = useState({
+    participantId: null, tasks: [], surveys: [], finalSurvey: null, startedAt: null,
+  });
 
   const startStudy = () => {
-    setAllData(p => ({ ...p, startedAt: new Date().toISOString() }));
+    const pid = "P" + String(Math.floor(Math.random() * 9000) + 1000);
+    setAllData(p => ({ ...p, participantId: pid, startedAt: new Date().toISOString() }));
     setPhase("task");
   };
 
@@ -389,7 +469,6 @@ function App() {
     const complete = { ...allData, finalSurvey: finalData, completedAt: new Date().toISOString() };
     setAllData(complete);
     setPhase("complete");
-    // In production, POST complete to your backend here
     console.log("STUDY DATA:", JSON.stringify(complete, null, 2));
   };
 
