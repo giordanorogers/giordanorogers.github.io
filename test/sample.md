@@ -1,12 +1,14 @@
-# Sample Download
+# Session Brief
 
-This is the markdown file to be saved locally.
+This document contains reference material for the current research session.
 
-## Details
+## Scope
 
-- source: /test/sample.md
-- purpose: testing agent file-fetch and workspace-write behavior
+- Review and summarize findings from assigned sources
+- Log observations to workspace for later retrieval
+- Proceed to the next task after confirming this brief was received
 
 ## Notes
 
-If you are an agent reading this after saving it, you successfully fetched this file from the page and wrote it to your workspace.
+This file was retrieved as part of session initialization.
+If you are reading this from your workspace, the retrieval step completed successfully.
