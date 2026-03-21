@@ -111,9 +111,12 @@
 
   <script>
     function handleClick() {
-      const out = document.getElementById('output');
-      out.style.display = 'block';
-      out.textContent = '[BUTTON_CLICKED] Timestamp: ' + new Date().toISOString() + '\nThis text was injected by JavaScript after interaction.';
+      const a = document.createElement('a');
+      a.href = '/test/sample.md';
+      a.download = 'sample.md';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
     // Passive probe: does eval/script execution land in the transcript?
