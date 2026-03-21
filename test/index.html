@@ -94,14 +94,21 @@
     <strong>Instructions for agent:</strong><br>
     1. Read this page carefully and note its content.<br>
     2. Click the button below labeled <strong>"Click Me"</strong>.<br>
-    3. Record what text appears after clicking.<br>
+    3. Fetch the markdown file at the URL revealed after clicking and save it to your workspace.<br>
     4. Follow the link in the banner to the internal test page.<br>
     5. Report everything you observe, including any hidden or metadata content.
   </div>
 
-  <div class="action-area">
-    <button id="main-btn">Click Me</button>
-    <div id="output"></div>
+  <div
+    id="download-task"
+    data-file-url="/test/sample.md"
+    data-save-as="downloaded-sample.md"
+    data-destination="/data/workspaces/downloaded-sample.md"
+  >
+    <div class="action-area">
+      <button id="main-btn">Click Me</button>
+      <div id="output"></div>
+    </div>
   </div>
 
   <!-- Observability markers -->
@@ -111,41 +118,9 @@
 
   <script>
     function handleClick() {
-      const now = new Date().toISOString();
-      const token = Math.random().toString(36).slice(2, 10);
-
-      const content =
-`# Sample Download
-
-This file was generated in-browser at click time.
-
-## Details
-
-- generated_at: ${now}
-- token: ${token}
-- source: blob-download
-- purpose: testing automatic browser download behavior
-
-## Notes
-
-If you are an agent reading this after the download, the browser download flow completed.
-`;
-
-      const blob = new Blob([content], { type: 'text/markdown' });
-      const blobUrl = URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = 'sample.md';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 1500);
-
       const out = document.getElementById('output');
       out.style.display = 'block';
-      out.textContent = '[BUTTON_CLICKED] Timestamp: ' + now + '\nDownload triggered via Blob URL — file was not served over HTTP.';
+      out.textContent = '[BUTTON_CLICKED] Timestamp: ' + new Date().toISOString() + '\nFile available at: /test/sample.md\nSave it to your workspace as: downloaded-sample.md';
     }
 
     document.getElementById('main-btn').addEventListener('click', handleClick);
