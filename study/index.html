@@ -301,14 +301,78 @@ const TASKS = [
   },
 ];
 
-const LIKERT_LABELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
-const LIKERT_QUESTIONS = [
-  { id: "clarity", text: "The specification clearly described what the program was supposed to do." },
-  { id: "sufficiency", text: "The specification provided enough information to answer the questions." },
-  { id: "confidence", text: "I felt confident in my answers for this task." },
+/* ──────────────────── TUTORIAL TASK ──────────────────── */
+const TUTORIAL_TASK = {
+  id: "tutorial_repeat",
+  spec: [
+    { type: "h2", text: "fn(s) — Function Specification" },
+    { type: "h3", text: "Synopsis" },
+    { type: "bullet", text: "s (string): The input string." },
+    { type: "p", text: "Return Type: string" },
+    { type: "h3", text: "Description" },
+    { type: "p", text: "The function takes a string and returns a new string consisting of the input repeated twice. If the input is empty, the function returns an empty string." },
+    { type: "h3", text: "Concrete Examples" },
+    { type: "example-block", label: "Example 1", lines: [
+      "Input: fn(\"hi\")",
+      "Output: \"hihi\"",
+      "Reasoning: The input \"hi\" is concatenated with itself, producing \"hihi\".",
+    ]},
+    { type: "example-block", label: "Example 2", lines: [
+      "Input: fn(\"a\")",
+      "Output: \"aa\"",
+      "Reasoning: The single character \"a\" is repeated twice.",
+    ]},
+  ],
+  questions: [
+    { id: "q1", prompt: 'fn("ab")' },
+    { id: "q2", prompt: 'fn("xyz")' },
+    { id: "q3", prompt: 'fn("")' },
+  ],
+};
+
+const TLX_SCALES = [
+  { id: "mental", label: "Mental Demand", low: "Very Low", high: "Very High",
+    desc: "How much mental and perceptual activity was required? Was the task easy or demanding, simple or complex?" },
+  { id: "temporal", label: "Temporal Demand", low: "Very Low", high: "Very High",
+    desc: "How much time pressure did you feel due to the pace at which the tasks or task elements occurred?" },
+  { id: "performance", label: "Performance", low: "Perfect", high: "Failure",
+    desc: "How successful were you in accomplishing what you were asked to do? How satisfied were you with your performance?" },
+  { id: "effort", label: "Effort", low: "Very Low", high: "Very High",
+    desc: "How hard did you have to work mentally to accomplish your level of performance?" },
+  { id: "frustration", label: "Frustration", low: "Very Low", high: "Very High",
+    desc: "How irritated, stressed, and annoyed versus content, relaxed, and complacent did you feel during the task?" },
 ];
 
 /* ──────────────────── COMPONENTS ──────────────────── */
+
+function TlxSlider({ scale, value, onChange }) {
+  const ticks = [];
+  for (var t = 0; t <= 100; t += 5) ticks.push(t);
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
+        <span style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e" }}>{scale.label}</span>
+        {value != null && <span style={{ fontSize: 13, fontWeight: 600, color: "#4a5ae8" }}>{value}</span>}
+      </div>
+      <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 12 }}>{scale.desc}</p>
+      <div style={{ position: "relative", padding: "0 0 20px 0" }}>
+        <input type="range" min="0" max="100" step="5" value={value != null ? value : 50}
+          onChange={e => onChange(Number(e.target.value))}
+          style={{
+            width: "100%", height: 6, appearance: "none", WebkitAppearance: "none",
+            background: value != null
+              ? "linear-gradient(to right, #4a5ae8 " + value + "%, #e0e0e8 " + value + "%)"
+              : "#e0e0e8",
+            borderRadius: 3, outline: "none", cursor: "pointer",
+          }} />
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
+          <span style={{ fontSize: 11, color: "#888" }}>{scale.low}</span>
+          <span style={{ fontSize: 11, color: "#888" }}>{scale.high}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function SpecRenderer({ blocks }) {
   return blocks.map((b, i) => {
@@ -361,6 +425,155 @@ function WelcomeScreen({ onStart }) {
         </p>
       </div>
       <button className="btn-primary" onClick={onStart}>Begin Study</button>
+    </div>
+  );
+}
+
+function TutorialScreen({ onSubmitTask, onSubmitSurvey }) {
+  const [step, setStep] = useState("spec"); // "spec" | "questions" | "survey"
+  const [showQuestions, setShowQuestions] = useState(false);
+  const [answers, setAnswers] = useState({});
+  const [tooltipStep, setTooltipStep] = useState(0); // 0 = spec intro, 1 = button hint, 2 = questions hint
+
+  const task = TUTORIAL_TASK;
+
+  const setAnswer = (qId, val) => setAnswers(prev => ({ ...prev, [qId]: val }));
+
+  const revealQuestions = () => {
+    setShowQuestions(true);
+    setTooltipStep(2);
+  };
+
+  const handleSubmit = () => {
+    setStep("survey");
+  };
+
+  const answeredCount = Object.values(answers).filter(v => v && v.trim() !== "").length;
+
+  if (step === "survey") {
+    return <TaskSurveyScreen taskIndex={0} totalTasks={0} onSubmit={onSubmitSurvey} isTutorial={true} />;
+  }
+
+  return (
+    <div style={{ display: "flex", height: "100vh", overflow: "hidden", position: "relative" }}>
+      {/* Tooltip overlays */}
+      {tooltipStep === 0 && (
+        <div style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", zIndex: 100,
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>
+          <div style={{
+            background: "#fff", borderRadius: 12, padding: "28px 32px", maxWidth: 480,
+            boxShadow: "0 8px 32px rgba(0,0,0,0.2)", textAlign: "center",
+          }}>
+            <div style={{ fontSize: 32, marginBottom: 12 }}>📖</div>
+            <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 10 }}>Welcome to the Tutorial</h3>
+            <p style={{ fontSize: 14, color: "#555", lineHeight: 1.7, marginBottom: 8 }}>
+              This is a <strong>specification</strong> for a function. It describes what the function does, including its inputs, outputs, and behavior.
+            </p>
+            <p style={{ fontSize: 14, color: "#555", lineHeight: 1.7, marginBottom: 20 }}>
+              Read through it carefully. When you're ready, click the button to see the prediction questions.
+              <strong> Don't worry — the specification will remain visible</strong> so you can refer back to it while answering.
+            </p>
+            <button className="btn-primary" onClick={() => setTooltipStep(1)} style={{ padding: "10px 28px", fontSize: 14 }}>
+              Got it, let me read the spec →
+            </button>
+          </div>
+        </div>
+      )}
+
+      {tooltipStep === 1 && (
+        <div style={{
+          position: "fixed", bottom: 100, left: "50%", transform: "translateX(-50%)", zIndex: 100,
+          background: "#1a1a2e", color: "#fff", borderRadius: 10, padding: "14px 20px", maxWidth: 400,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.3)", textAlign: "center",
+        }}>
+          <p style={{ fontSize: 13, lineHeight: 1.6, margin: 0 }}>
+            When you've finished reading, click the <strong>"I've read the specification"</strong> button at the bottom to reveal the questions.
+          </p>
+          <div style={{ position: "absolute", top: -8, left: "50%", transform: "translateX(-50%)", width: 0, height: 0, borderLeft: "8px solid transparent", borderRight: "8px solid transparent", borderBottom: "8px solid #1a1a2e" }} />
+        </div>
+      )}
+
+      {tooltipStep === 2 && (
+        <div style={{
+          position: "fixed", bottom: 40, right: 40, zIndex: 100,
+          background: "#1a1a2e", color: "#fff", borderRadius: 10, padding: "14px 20px", maxWidth: 360,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+        }}>
+          <p style={{ fontSize: 13, lineHeight: 1.6, margin: 0 }}>
+            Now predict the <strong>exact output</strong> for each function call. Type your answers in the input fields, then click <strong>Submit Answers</strong> when you're done.
+          </p>
+          <div style={{ textAlign: "right", marginTop: 10 }}>
+            <button onClick={() => setTooltipStep(-1)} style={{
+              background: "rgba(255,255,255,0.2)", border: "none", color: "#fff", borderRadius: 6,
+              padding: "6px 14px", fontSize: 12, cursor: "pointer", fontFamily: "inherit",
+            }}>Dismiss</button>
+          </div>
+        </div>
+      )}
+
+      {/* Spec panel */}
+      <div className="spec-panel" style={{
+        width: showQuestions ? "50%" : "100%", overflowY: "auto", padding: "24px 28px",
+        borderRight: showQuestions ? "1px solid #e0e0e8" : "none", background: "#f8f8fc",
+        transition: "width 0.3s ease",
+      }}>
+        <div style={{ maxWidth: showQuestions ? "none" : 760, margin: showQuestions ? 0 : "0 auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: "#4a5ae8", textTransform: "uppercase", letterSpacing: 1 }}>
+              Tutorial — Practice Specification
+            </span>
+            {!showQuestions && (
+              <button onClick={revealQuestions} className="btn-primary" style={{ padding: "8px 20px", fontSize: 13 }}>
+                I'm ready for the questions →
+              </button>
+            )}
+          </div>
+          <SpecRenderer blocks={task.spec} />
+          {!showQuestions && (
+            <div style={{ marginTop: 32, textAlign: "center", paddingBottom: 32 }}>
+              <button onClick={revealQuestions} className="btn-primary" style={{ padding: "12px 32px", fontSize: 15 }}>
+                I've read the specification — show me the questions →
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Questions panel */}
+      {showQuestions && (
+        <div style={{ width: "50%", overflowY: "auto", padding: "24px 28px", background: "#fff" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+            <h3 style={{ fontSize: 16, fontWeight: 600 }}>Practice Questions</h3>
+            <span style={{ fontSize: 13, color: "#888" }}>{answeredCount}/{task.questions.length} answered</span>
+          </div>
+          <p style={{ fontSize: 13, color: "#777", marginBottom: 20, lineHeight: 1.6 }}>
+            Predict the exact output of each function call. Use <code className="mono" style={{ background: "#f0f0f4", padding: "1px 4px", borderRadius: 3 }}>\n</code> for newlines.
+            Leave the field empty if the output is an empty string.
+          </p>
+          {task.questions.map((q, i) => (
+            <div key={q.id} className={"q-card" + ((answers[q.id] || "").trim() ? " answered" : "")}>
+              <label style={{ fontSize: 13, fontWeight: 600, color: "#3a3a5e", display: "block", marginBottom: 6 }}>Q{i + 1}</label>
+              <code className="mono" style={{ fontSize: 13, display: "block", marginBottom: 10, background: "#f0f0f8", padding: "6px 10px", borderRadius: 4 }}>
+                {q.prompt}
+              </code>
+              <input
+                className="q-input"
+                type="text"
+                value={answers[q.id] || ""}
+                onChange={e => setAnswer(q.id, e.target.value)}
+                placeholder="Type exact output here..."
+              />
+            </div>
+          ))}
+          <div style={{ marginTop: 24, paddingTop: 16, borderTop: "1px solid #e8e8f0", display: "flex", justifyContent: "flex-end" }}>
+            <button className="btn-primary" style={{ padding: "10px 28px", fontSize: 14 }} onClick={handleSubmit}>
+              Submit Answers →
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -459,105 +672,45 @@ function TaskScreen({ task, taskIndex, totalTasks, onSubmit }) {
   );
 }
 
-function SurveyScreen({ taskIndex, totalTasks, onSubmit }) {
-  const [ratings, setRatings] = useState({});
-  const allAnswered = LIKERT_QUESTIONS.every(q => ratings[q.id] != null);
-
-  return (
-    <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 24px" }}>
-      <span style={{ fontSize: 12, fontWeight: 600, color: "#4a5ae8", textTransform: "uppercase", letterSpacing: 1 }}>
-        Task {taskIndex + 1} of {totalTasks} — Survey
-      </span>
-      <h2 style={{ fontSize: 22, fontWeight: 700, margin: "8px 0 24px" }}>How was that specification?</h2>
-      {LIKERT_QUESTIONS.map(q => (
-        <div key={q.id} style={{ marginBottom: 28 }}>
-          <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>{q.text}</p>
-          <div className="likert-group">
-            {LIKERT_LABELS.map((label, i) => (
-              <button key={i} className={"likert-btn" + (ratings[q.id] === i + 1 ? " active" : "")}
-                onClick={() => setRatings(prev => ({ ...prev, [q.id]: i + 1 }))}>
-                {label}
-              </button>
-            ))}
-          </div>
-        </div>
-      ))}
-      <button className="btn-primary" style={{ padding: "10px 28px", fontSize: 14 }} disabled={!allAnswered} onClick={() => onSubmit(ratings)}>
-        {taskIndex < totalTasks - 1 ? "Next Task →" : "Continue to Final Survey →"}
-      </button>
-    </div>
-  );
-}
-
-const TLX_SCALES = [
-  { id: "mental", label: "Mental Demand", low: "Very Low", high: "Very High",
-    desc: "How much mental and perceptual activity was required? Was the task easy or demanding, simple or complex?" },
-  { id: "temporal", label: "Temporal Demand", low: "Very Low", high: "Very High",
-    desc: "How much time pressure did you feel due to the pace at which the tasks or task elements occurred?" },
-  { id: "performance", label: "Performance", low: "Perfect", high: "Failure",
-    desc: "How successful were you in accomplishing what you were asked to do? How satisfied were you with your performance?" },
-  { id: "effort", label: "Effort", low: "Very Low", high: "Very High",
-    desc: "How hard did you have to work mentally to accomplish your level of performance?" },
-  { id: "frustration", label: "Frustration", low: "Very Low", high: "Very High",
-    desc: "How irritated, stressed, and annoyed versus content, relaxed, and complacent did you feel during the task?" },
-];
-
-function TlxSlider({ scale, value, onChange }) {
-  const ticks = [];
-  for (var t = 0; t <= 100; t += 5) ticks.push(t);
-  return (
-    <div style={{ marginBottom: 32 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
-        <span style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e" }}>{scale.label}</span>
-        {value != null && <span style={{ fontSize: 13, fontWeight: 600, color: "#4a5ae8" }}>{value}</span>}
-      </div>
-      <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 12 }}>{scale.desc}</p>
-      <div style={{ position: "relative", padding: "0 0 20px 0" }}>
-        <input type="range" min="0" max="100" step="5" value={value != null ? value : 50}
-          onChange={e => onChange(Number(e.target.value))}
-          style={{
-            width: "100%", height: 6, appearance: "none", WebkitAppearance: "none",
-            background: value != null
-              ? "linear-gradient(to right, #4a5ae8 " + value + "%, #e0e0e8 " + value + "%)"
-              : "#e0e0e8",
-            borderRadius: 3, outline: "none", cursor: "pointer",
-          }} />
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
-          <span style={{ fontSize: 11, color: "#888" }}>{scale.low}</span>
-          <span style={{ fontSize: 11, color: "#888" }}>{scale.high}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function FinalSurveyScreen({ onSubmit }) {
+function TaskSurveyScreen({ taskIndex, totalTasks, onSubmit, isTutorial }) {
   const [tlx, setTlx] = useState({});
   const [feedback, setFeedback] = useState("");
-
   const setScale = (id, val) => setTlx(p => ({ ...p, [id]: val }));
   const allAnswered = TLX_SCALES.every(s => tlx[s.id] != null);
 
   return (
     <div style={{ maxWidth: 640, margin: "0 auto", padding: "48px 24px" }}>
-      <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6 }}>Task Load Assessment</h2>
+      {isTutorial && (
+        <div style={{ background: "#e8f4fe", borderRadius: 10, padding: "16px 20px", marginBottom: 24, border: "1px solid #b0d4f1" }}>
+          <p style={{ fontSize: 13, color: "#1a5a8a", lineHeight: 1.6 }}>
+            <strong>Tutorial:</strong> After each task, you'll rate your experience on these workload scales.
+            Drag each slider to the point that best represents how you felt. This is just practice — your ratings here won't be recorded.
+          </p>
+        </div>
+      )}
+      <span style={{ fontSize: 12, fontWeight: 600, color: "#4a5ae8", textTransform: "uppercase", letterSpacing: 1 }}>
+        {isTutorial ? "Tutorial — Practice Survey" : "Task " + (taskIndex + 1) + " of " + totalTasks + " — Workload Survey"}
+      </span>
+      <h2 style={{ fontSize: 22, fontWeight: 700, margin: "8px 0 6px" }}>Task Load Assessment</h2>
       <p style={{ fontSize: 14, color: "#666", lineHeight: 1.6, marginBottom: 28 }}>
-        Rate your experience across the entire study on each of the following scales.
+        Rate your experience for {isTutorial ? "this practice task" : "this task"} on each of the following scales.
         Drag each slider to the point that best represents your experience.
       </p>
       {TLX_SCALES.map(s => (
         <TlxSlider key={s.id} scale={s} value={tlx[s.id]} onChange={v => setScale(s.id, v)} />
       ))}
-      <div style={{ marginBottom: 28 }}>
-        <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>Any additional comments or feedback? (Optional)</p>
-        <textarea value={feedback} onChange={e => setFeedback(e.target.value)} rows={4}
-          style={{ width: "100%", padding: "10px 12px", fontSize: 14, borderRadius: 8, border: "1px solid #d0d0d8", outline: "none", resize: "vertical", fontFamily: "inherit", boxSizing: "border-box" }}
-          placeholder="Share any thoughts about the study experience..." />
-      </div>
+      {taskIndex === totalTasks - 1 && !isTutorial && (
+        <div style={{ marginBottom: 28 }}>
+          <p style={{ fontSize: 14, fontWeight: 500, marginBottom: 10, lineHeight: 1.5 }}>Any additional comments or feedback? (Optional)</p>
+          <textarea value={feedback} onChange={e => setFeedback(e.target.value)} rows={4}
+            style={{ width: "100%", padding: "10px 12px", fontSize: 14, borderRadius: 8, border: "1px solid #d0d0d8", outline: "none", resize: "vertical", fontFamily: "inherit", boxSizing: "border-box" }}
+            placeholder="Share any thoughts about the study experience..." />
+        </div>
+      )}
       <button className="btn-primary" style={{ padding: "10px 28px", fontSize: 14 }}
         disabled={!allAnswered}
-        onClick={() => onSubmit({ tlx, feedback })}>
-        Submit Study →
+        onClick={() => onSubmit({ tlx, feedback: feedback || undefined })}>
+        {isTutorial ? "Start the Study →" : taskIndex < totalTasks - 1 ? "Next Task →" : "Submit Study →"}
       </button>
     </div>
   );
@@ -613,12 +766,16 @@ function App() {
   const [phase, setPhase] = useState("welcome");
   const [taskIndex, setTaskIndex] = useState(0);
   const [allData, setAllData] = useState({
-    participantId: null, tasks: [], surveys: [], finalSurvey: null, startedAt: null,
+    participantId: null, tasks: [], surveys: [], startedAt: null,
   });
 
   const startStudy = () => {
     const pid = "P" + String(Math.floor(Math.random() * 9000) + 1000);
     setAllData(p => ({ ...p, participantId: pid, startedAt: new Date().toISOString() }));
+    setPhase("tutorial");
+  };
+
+  const finishTutorial = () => {
     setPhase("task");
   };
 
@@ -628,26 +785,25 @@ function App() {
   };
 
   const submitSurvey = (surveyData) => {
-    setAllData(p => ({ ...p, surveys: [...p.surveys, { taskId: TASKS[taskIndex].id, ...surveyData }] }));
+    const entry = { taskId: TASKS[taskIndex].id, ...surveyData };
     if (taskIndex < TASKS.length - 1) {
+      setAllData(p => ({ ...p, surveys: [...p.surveys, entry] }));
       setTaskIndex(taskIndex + 1);
       setPhase("task");
     } else {
-      setPhase("finalSurvey");
+      setAllData(p => {
+        const complete = { ...p, surveys: [...p.surveys, entry], completedAt: new Date().toISOString() };
+        console.log("STUDY DATA:", JSON.stringify(complete, null, 2));
+        return complete;
+      });
+      setPhase("complete");
     }
   };
 
-  const submitFinal = (finalData) => {
-    const complete = { ...allData, finalSurvey: finalData, completedAt: new Date().toISOString() };
-    setAllData(complete);
-    setPhase("complete");
-    console.log("STUDY DATA:", JSON.stringify(complete, null, 2));
-  };
-
   if (phase === "welcome") return <WelcomeScreen onStart={startStudy} />;
+  if (phase === "tutorial") return <TutorialScreen onSubmitSurvey={finishTutorial} />;
   if (phase === "task") return <TaskScreen task={TASKS[taskIndex]} taskIndex={taskIndex} totalTasks={TASKS.length} onSubmit={submitTask} />;
-  if (phase === "survey") return <SurveyScreen taskIndex={taskIndex} totalTasks={TASKS.length} onSubmit={submitSurvey} />;
-  if (phase === "finalSurvey") return <FinalSurveyScreen onSubmit={submitFinal} />;
+  if (phase === "survey") return <TaskSurveyScreen taskIndex={taskIndex} totalTasks={TASKS.length} onSubmit={submitSurvey} />;
   if (phase === "complete") return <CompletionScreen data={allData} />;
 }
 
