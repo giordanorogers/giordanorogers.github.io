@@ -1,11 +1,7 @@
 ---
-title: 'Research Taste'
-date: 2999-11-26
-permalink: /posts/2999/11/research_taste/
-tags:
-  - research
-  - AI
-  - science
+title: "Research Taste"
+date: 2025-11-26
+description: "Notes toward operationalizing research taste: asking questions with surprising answers."
 ---
 
 

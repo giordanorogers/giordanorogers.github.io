@@ -1,11 +1,7 @@
 ---
-title: 'AI Mediated Mediocrity'
+title: "AI Mediated Mediocrity"
 date: 2025-12-14
-permalink: /posts/2025/12/ai_mediated_mediocrity/
-tags:
-  - AI
-  - Prodcutivity
-  - Research
+description: "LLMs are excellent at removing struggle, and struggle is where growth happens. On going AI-minimal."
 ---
 
 The first time I talked to ChatGPT, it blew my mind. Talking to a computer. Getting real answers. Learning something. It was life-changing. It pushed me, a dropout, back into school for computer science.

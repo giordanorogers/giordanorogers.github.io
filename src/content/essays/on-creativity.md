@@ -1,11 +1,7 @@
 ---
-title: 'On creativity'
+title: "On creativity"
 date: 2025-08-18
-permalink: /posts/2025/08/what_is_creativity/
-tags:
-  - philosophy
-  - creativity
-  - computation
+description: "Potential versus actualized information, and a computational sketch of what creativity is."
 ---
 
 
