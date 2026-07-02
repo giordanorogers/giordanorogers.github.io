@@ -15,7 +15,7 @@ Replace the stock academicpages Jekyll site with a bespoke, writer-first persona
 | Stack | Astro v5, custom CSS, no UI framework |
 | Aesthetic | Dark-first Lattice language, light mode behind a toggle |
 | Homepage | Writer-first: short identity paragraph, then essays |
-| Affiliation | Ideas-first; OpenAI mentioned only on /about |
+| Affiliation | None named anywhere; /about states his focus plus a views-are-my-own disclaimer |
 | Domain | `giorogers.com` (already owned) |
 | Sections | Essays + About only, plus a quiet RSS feed |
 | Old experiments | `study/`, `test/`, `openclaw-security/` removed from the site |
@@ -33,9 +33,9 @@ Replace the stock academicpages Jekyll site with a bespoke, writer-first persona
 
 | Path | Content |
 |---|---|
-| `/` | Name, one-paragraph identity statement (ideas-first, no employer), full essay list reverse-chron with uppercase mono date metadata. Footer: GitHub, LinkedIn, email, RSS. |
-| `/essays/<slug>/` | Essay page: large Georgia serif title, mono metadata line (date · reading time), ~65ch reading measure. |
-| `/about/` | Fuller bio; the only place OpenAI appears. Contact links. |
+| `/` | Masthead: "Gio Rogers" (Georgia, regular weight — not bold) with the constellation motif; header nav is a mono "About" link + theme toggle. Below: full essay list reverse-chron with uppercase mono date metadata. No bio text on the homepage. Footer: a single quiet RSS link. |
+| `/essays/<slug>/` | Essay page: large Georgia serif title, mono metadata line (date · reading time), ~65ch reading measure. Mono "← Essays" back link + theme toggle in header; same RSS-only footer. |
+| `/about/` | Exact copy (user-provided): "I work on identifying, understanding, and mitigating vulnerabilities in AI assistants and agents to make them safer." followed by "All views on this site are my own and do not reflect those of any other organization or person." Then links: LinkedIn, Google Scholar, Email. This is the only place contact links appear; no GitHub link anywhere on the site. |
 | `/rss.xml` | Full-content RSS feed via `@astrojs/rss`; linked only in the footer. |
 | `/404.html` | Styled 404 in the site's voice. |
 
@@ -55,7 +55,7 @@ Tokens ported from Lattice (`insight-loom-mvp`), as CSS custom properties on `:r
 - **Dark (default):** background `#000`; body text `#eeeeea`; strong text `#fff`; muted `rgba(238,238,234,0.58)`; hairline borders `rgba(238,238,234,0.22)`, strong `rgba(238,238,234,0.54)`.
 - **Light:** background `#fff`; text `#111`; muted `rgba(17,17,17,0.58)`; borders `rgba(17,17,17,0.2)`.
 - **Accent:** Lattice cyan glow (`rgba(113,218,255,0.42)` family) used only for link hover glow and the masthead motif. No other color.
-- **Type:** Georgia serif for titles/headings (essay titles `clamp(2rem, 4vw, 3.65rem)`, line-height ≈1.02, weight 700–800) and essay body (~1.05rem, line-height 1.6). Self-hosted **Sora** (woff2, subset, weights 400/600) for nav, UI labels, homepage identity paragraph. `ui-monospace` system stack for metadata: 0.7rem, uppercase, letter-spacing 0.08em.
+- **Type:** Georgia serif for titles/headings (essay titles `clamp(2rem, 4vw, 3.65rem)`, line-height ≈1.02, weight 700–800; the masthead name "Gio Rogers" is regular weight, not bold) and essay body (~1.05rem, line-height 1.6). Self-hosted **Sora** (woff2, subset, weights 400/600) for nav, UI labels, homepage identity paragraph. `ui-monospace` system stack for metadata: 0.7rem, uppercase, letter-spacing 0.08em.
 - **Motif:** one restrained constellation touch — a faint breathing node-glow in the masthead and a soft glow on essay-link hover, 180ms ease transitions, fully disabled under `prefers-reduced-motion`.
 - **Theme toggle:** button in the header; inline `<head>` script reads `localStorage` and sets `data-theme` before paint (no flash). Defaults to dark.
 - **Density:** airy — content max-width ~700px for prose, generous section gaps, hairline dividers (dotted between essay list items, per Lattice).
@@ -73,7 +73,7 @@ Tags are dropped from all essays during migration — nothing in the new design 
 
 **Delete** (git history preserves everything): all Jekyll machinery (`_config.yml`, `_sass/`, `_includes/`, `_layouts/`, `_data/`, `Gemfile*`, `Dockerfile`, `docker-compose.yaml`, `assets/`, `_site/`); all placeholder collections (`_publications/`, `_talks/`, `_teaching/`, `_portfolio/`); template posts (`blog-post-template`, `reading_list.md` stub, `first_five.d`, `_drafts/`); generator tooling (`markdown_generator/`, `talkmap*.ipynb`, `scrape_talks` workflow); experiments (`study/`, `test/`, `openclaw-security/`); unreferenced `images/` and `files/` assets.
 
-**Rewrite** (drafted during implementation, user approves copy before deploy): homepage identity paragraph and the /about page.
+**Copy:** the /about text is fixed verbatim per Giordano (see Site structure table). The homepage carries no bio text. Site `<title>`/metadata use "Gio Rogers".
 
 **Out of scope:** newsletter/email capture, analytics, Research/Projects page, Notes stream, interactive essay components, Lattice public page. Any of these can be added later without structural change.
 
