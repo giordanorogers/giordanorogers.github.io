@@ -5,14 +5,26 @@ import Base from '../layouts/Base.astro';
 <Base title="About — Gio Rogers" description="I work on identifying, understanding, and mitigating vulnerabilities in AI assistants and agents to make them safer.">
   <article class="prose">
     <h1 style="margin-top:52px;">About</h1>
-    <p style="font-size:1.06rem; max-width:32rem;">
-      I work on identifying, understanding, and mitigating vulnerabilities in AI assistants and
-      agents to make them safer.
-    </p>
-    <p style="font-size:0.85rem; line-height:1.6; color:var(--muted); max-width:32rem; margin-bottom:44px;">
-      All views on this site are my own and do not reflect those of any other organization or
-      person.
-    </p>
+    <div class="about-row">
+      <img
+        class="about-photo"
+        src="/images/profile.jpg"
+        alt="Gio Rogers"
+        width="76"
+        height="76"
+        loading="lazy"
+      />
+      <div>
+        <p style="font-size:1.06rem; margin-top:0; max-width:32rem;">
+          I work on identifying, understanding, and mitigating vulnerabilities in AI assistants
+          and agents to make them safer.
+        </p>
+        <p style="font-size:0.85rem; line-height:1.6; color:var(--muted); max-width:32rem; margin-bottom:0;">
+          All views on this site are my own and do not reflect those of any other organization or
+          person.
+        </p>
+      </div>
+    </div>
     <div class="about-links">
       <a class="mono-link" href="https://www.linkedin.com/in/giorogers">LinkedIn</a>
       <a class="mono-link" href="https://scholar.google.com/citations?user=vkcZSNAAAAAJ">Google Scholar</a>
@@ -22,6 +34,20 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
+  .about-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 44px;
+  }
+  .about-photo {
+    flex-shrink: 0;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
   .about-links {
     display: flex;
     gap: 24px;
