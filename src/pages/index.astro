@@ -3,20 +3,22 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { formatDate } from '../lib/format';
 
-const essays = (await getCollection('essays')).sort(
+const essays = (await getCollection('essays', ({ data }) => !data.archived)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 ---
 
-<Base title="Gio Rogers" description="Essays on AI safety, interpretability, and research." home>
-  <div class="mono-label section-label">Essays</div>
+<Base title="Gio Rogers" description="Posts on AI safety, interpretability, research, and art." home>
+  <div class="mono-label section-label">Posts</div>
   <ul class="essay-list">
     {
       essays.map((essay) => (
         <li>
           <a class="essay-link" href={`/essays/${essay.id}/`}>
             <span class="title">{essay.data.title}</span>
-            <span class="date">{formatDate(essay.data.date)}</span>
+            <span class="date">
+              {[...essay.data.tags.map((t) => t.toUpperCase()), formatDate(essay.data.date)].join(' · ')}
+            </span>
           </a>
         </li>
       ))

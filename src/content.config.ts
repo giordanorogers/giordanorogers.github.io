@@ -7,6 +7,8 @@ const essays = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     description: z.string(),
+    tags: z.array(z.enum(['fiction', 'art essay', 'blog post'])).default([]),
+    archived: z.boolean().default(false),
   }),
 });
 

@@ -2,12 +2,12 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 
 export async function GET(context) {
-  const essays = (await getCollection('essays')).sort(
+  const essays = (await getCollection('essays', ({ data }) => !data.archived)).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
   );
   return rss({
     title: 'Gio Rogers',
-    description: 'Essays on AI safety, interpretability, and research.',
+    description: 'Posts on AI safety, interpretability, research, and art.',
     site: context.site,
     items: essays.map((essay) => ({
       title: essay.data.title,

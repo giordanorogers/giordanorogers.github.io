@@ -191,6 +191,8 @@ a.mono-link:hover {
   padding: 0.08em 0.35em;
 }
 .astro-code {
+  tab-size: 4;
+  -moz-tab-size: 4;
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 16px 18px;

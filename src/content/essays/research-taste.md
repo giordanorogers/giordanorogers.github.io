@@ -2,6 +2,7 @@
 title: "Research Taste"
 date: 2025-11-26
 description: "Notes toward operationalizing research taste: asking questions with surprising answers."
+archived: true
 ---
 
 

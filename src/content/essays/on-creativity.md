@@ -2,6 +2,7 @@
 title: "On creativity"
 date: 2025-08-18
 description: "Potential versus actualized information, and a computational sketch of what creativity is."
+tags: ["blog post"]
 ---
 
 
@@ -27,7 +28,7 @@ This is the distinction between **potential information** and **actualized infor
 Now I write a function and check the condition:
 ```python
 def both_even(x,y):
-	return x % 2 == y % 2 == 0
+    return x % 2 == y % 2 == 0
 both_even_x_y = both_even(x,y)
 ```
 Now the information that x and y are both even exists.
@@ -48,7 +49,7 @@ The information that *Alice and Bob are both rich* only exists implicitly.
 To make it explicit, I have to check it and store it.
 ```python
 def both_rich(x,y):
-	return "rich" in x and "rich" in y
+    return "rich" in x and "rich" in y
 both_rich_Alice_Bob = both_rich(Alice, Bob)
 ```
 

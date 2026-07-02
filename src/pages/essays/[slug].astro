@@ -15,7 +15,13 @@ const { Content } = await render(essay);
 <Base title={`${essay.data.title} — Gio Rogers`} description={essay.data.description}>
   <article class="prose">
     <div class="mono-label" style="display:block; margin-top:48px;">
-      {formatDate(essay.data.date)} &middot; {readingTime(essay.body ?? '')} min read
+      {
+        [
+          formatDate(essay.data.date),
+          `${readingTime(essay.body ?? '')} min read`,
+          ...essay.data.tags,
+        ].join(' · ')
+      }
     </div>
     <h1>{essay.data.title}</h1>
     <Content />

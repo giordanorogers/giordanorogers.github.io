@@ -2,6 +2,7 @@
 title: "Activation Patching the Residual Stream"
 date: 2025-07-19
 description: "A hands-on tutorial on activation patching the residual stream of Llama-3.3-70B with nnsight."
+archived: true
 ---
 
 Activation patching is a technique that lets us identify which model components are involved in specific behaviors.
@@ -371,4 +372,4 @@ Based on the above plot, we can make the following suppositions:
 
 ## Final Thoughts
 
-Patching at the residual stream level is informative, but it is the most coarse-grained form of patching we can do. For a more fine-grained analysis, we will want to observe the activations in the mlp and attention layers, which we will do in the next notebook.
+Patching at the residual stream level is informative, but it is the most coarse-grained form of patching we can do. For a more fine-grained analysis, we will want to observe the activations in the mlp and attention layers.
