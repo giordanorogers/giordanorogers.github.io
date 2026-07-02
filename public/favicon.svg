@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    line { stroke: rgba(120, 120, 118, 0.6); }
+    .halo { fill: rgba(113, 218, 255, 0.25); }
+    .core { fill: #59ccff; }
+    @media (prefers-color-scheme: light) {
+      .halo { fill: rgba(0, 140, 200, 0.18); }
+      .core { fill: #0079b8; }
+    }
+  </style>
+  <line x1="7" y1="22" x2="16" y2="9" stroke-width="1.4" />
+  <line x1="16" y1="9" x2="26" y2="24" stroke-width="1.4" />
+  <circle class="halo" cx="7" cy="22" r="6" />
+  <circle class="core" cx="7" cy="22" r="2.4" />
+  <circle class="halo" cx="16" cy="9" r="7" />
+  <circle class="core" cx="16" cy="9" r="3" />
+  <circle class="halo" cx="26" cy="24" r="5.5" />
+  <circle class="core" cx="26" cy="24" r="2.2" />
+</svg>
