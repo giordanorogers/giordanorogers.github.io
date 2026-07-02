@@ -32,11 +32,12 @@
 }
 html {
   background: var(--bg);
+  font-size: 112.5%;
 }
 body {
   margin: 0 auto;
   padding: 56px 24px 40px;
-  max-width: 700px;
+  max-width: 760px;
   background: var(--bg);
   color: var(--text);
   font-family: var(--serif);
@@ -71,7 +72,7 @@ a {
 .mono-label,
 .mono-link {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
@@ -84,8 +85,8 @@ a.mono-link:hover {
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 999px;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   color: var(--muted);
   cursor: pointer;
@@ -133,7 +134,7 @@ a.mono-link:hover {
 }
 .essay-link .date {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   color: var(--muted);
   white-space: nowrap;
@@ -141,6 +142,13 @@ a.mono-link:hover {
 .section-label {
   margin: 64px 0 6px;
   font-weight: 600;
+}
+@media (max-width: 560px) {
+  .essay-link {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
 }
 .site-footer {
   display: flex;
