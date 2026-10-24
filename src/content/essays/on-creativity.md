@@ -1,8 +1,9 @@
 ---
 title: "On creativity"
 date: 2025-08-18
-description: "Potential versus actualized information, and a computational sketch of what creativity is."
-tags: ["blog post"]
+description: "What makes an idea new? A short argument about creativity as making implicit information explicit, worked through in Python."
+tags: ["creativity", "ideas"]
+featured: true
 ---
 
 

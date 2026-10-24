@@ -1,7 +1,7 @@
 ---
 title: "Encounters with Venus"
 date: 2026-01-31
-description: "Ensnared by beauty."
+description: "A childhood encounter with beauty, woven through the legend of a knight in the cave of Venus."
 tags: ["art essay"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Pregnant Madonna"
 date: 2026-02-27
-description: "An artist's shame."
+description: "A young artist travels to Jamaica to collect his uncle’s ashes and confronts the work he left behind."
 tags: ["fiction"]
 ---
 

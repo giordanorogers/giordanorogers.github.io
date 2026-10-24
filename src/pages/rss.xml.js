@@ -1,10 +1,9 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import { getPublicPosts } from '../lib/publication.mjs';
 
 export async function GET(context) {
-  const essays = (await getCollection('essays', ({ data }) => !data.archived)).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  );
+  const essays = getPublicPosts(await getCollection('essays'));
   return rss({
     title: 'Gio Rogers',
     description: 'Posts on AI safety, interpretability, research, and art.',
@@ -14,6 +13,7 @@ export async function GET(context) {
       pubDate: essay.data.date,
       description: essay.data.description,
       link: `/essays/${essay.id}/`,
+      categories: [...new Set([essay.data.format, ...essay.data.tags])],
     })),
   });
 }

@@ -7,7 +7,11 @@ const essays = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     description: z.string(),
-    tags: z.array(z.enum(['fiction', 'art essay', 'blog post'])).default([]),
+    tags: z.array(z.string()).default([]),
+    format: z.enum(['essay', 'note', 'tutorial']).default('essay'),
+    updated: z.coerce.date().optional(),
+    draft: z.boolean().default(false),
+    featured: z.boolean().default(false),
     archived: z.boolean().default(false),
   }),
 });
