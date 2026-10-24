@@ -1,8 +1,11 @@
 import { defineConfig } from 'astro/config';
+import { satteri } from '@astrojs/markdown-satteri';
+import { headingHierarchy } from './src/lib/heading-hierarchy.mjs';
 
 export default defineConfig({
   site: 'https://giorogers.com',
   markdown: {
+    processor: satteri({ mdastPlugins: [headingHierarchy] }),
     shikiConfig: {
       themes: { light: 'github-light', dark: 'vesper' },
       defaultColor: false,

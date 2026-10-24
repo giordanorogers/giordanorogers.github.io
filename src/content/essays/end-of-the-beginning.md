@@ -1,7 +1,7 @@
 ---
 title: "End of the Beginning"
 date: 2026-01-28
-description: "A death and a transition."
+description: "An intimate story of loss, a relationship in crisis, and the rituals people make to move on."
 tags: ["art essay"]
 ---
 

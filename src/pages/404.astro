@@ -1,11 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-
-<Base title="404 — Gio Rogers" description="This page doesn't exist.">
-  <div class="mono-label" style="display:block; margin-top:96px;">404</div>
-  <p style="font-size:1.3rem; color:var(--text-strong); margin:10px 0 28px;">
-    This page doesn't exist.
-  </p>
-  <a class="mono-link" href="/">&larr; Posts</a>
+<Base title="Page not found — Gio Rogers" description="This page could not be found. Browse Gio Rogers’s writing or get in touch." noindex canonicalPath="/404.html">
+  <section class="not-found">
+    <p class="section-label">404</p>
+    <h1>A loose thread.</h1>
+    <p>There’s no page at this address. The link may be incomplete or out of date.</p>
+    <p><a href="/#writing">Find something to read</a>, or <a href="/about/#contact">get in touch</a>.</p>
+  </section>
 </Base>

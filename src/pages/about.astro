@@ -1,58 +1,22 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-
 <Base title="About — Gio Rogers" description="I work on identifying, understanding, and mitigating vulnerabilities in AI assistants and agents to make them safer.">
-  <article class="prose">
-    <h1 style="margin-top:52px;">About</h1>
+  <article class="prose about-page">
+    <h1>About</h1>
     <div class="about-row">
-      <img
-        class="about-photo"
-        src="/images/profile.jpg"
-        alt="Gio Rogers"
-        width="112"
-        height="112"
-        loading="lazy"
-      />
+      <img class="about-photo" src="/images/profile.jpg" alt="Gio Rogers" width="112" height="112" />
       <div>
-        <p style="font-size:1.06rem; margin-top:0; max-width:32rem;">
-          I work on identifying, understanding, and mitigating vulnerabilities in AI assistants
-          and agents to make them safer.
-        </p>
-        <p style="font-size:0.85rem; line-height:1.6; color:var(--muted); max-width:32rem; margin-bottom:0;">
-          All views on this site are my own and do not reflect those of any other organization or
-          person.
-        </p>
+        <p>I work on identifying, understanding, and mitigating vulnerabilities in AI assistants
+          and agents to make them safer.</p>
+        <p class="disclaimer">All views on this site are my own and do not reflect those of any other organization or
+          person.</p>
       </div>
     </div>
-    <div class="about-links">
-      <a class="mono-link" href="https://www.linkedin.com/in/giorogers">LinkedIn</a>
-      <a class="mono-link" href="https://scholar.google.com/citations?user=vkcZSNAAAAAJ">Google Scholar</a>
-      <a class="mono-link" href="mailto:giordanopaulrogers@gmail.com">Email</a>
-    </div>
+    <nav class="about-links" id="contact" aria-label="Contact links">
+      <a href="https://www.linkedin.com/in/giorogers">LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=vkcZSNAAAAAJ">Google Scholar</a>
+      <a href="mailto:giordanopaulrogers@gmail.com">Email</a>
+    </nav>
   </article>
 </Base>
-
-<style>
-  .about-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-    margin-bottom: 44px;
-  }
-  .about-photo {
-    flex-shrink: 0;
-    width: 112px;
-    height: 112px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid var(--border);
-  }
-  .about-links {
-    display: flex;
-    gap: 24px;
-    border-top: 1px dotted var(--border-dotted);
-    padding-top: 20px;
-    max-width: 32rem;
-  }
-</style>

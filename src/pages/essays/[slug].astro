@@ -1,29 +1,60 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import PostPreview from '../../components/PostPreview.astro';
 import { formatDate, readingTime } from '../../lib/format';
-
+import { getPublicPosts, isPublished } from '../../lib/publication.mjs';
 export async function getStaticPaths() {
+  const now = new Date();
   const essays = await getCollection('essays');
-  return essays.map((essay) => ({ params: { slug: essay.id }, props: { essay } }));
+  return essays.filter(essay => import.meta.env.DEV || isPublished(essay, now))
+    .map(essay => ({ params: { slug: essay.id }, props: { essay } }));
 }
-
 const { essay } = Astro.props;
-const { Content } = await render(essay);
+const { Content, headings } = await render(essay);
+const minutes = readingTime(essay.body ?? '');
+const now = new Date();
+const preview = !isPublished(essay, now);
+const toc = headings.filter(heading => heading.depth >= 2 && heading.depth <= 3);
+const showToc = minutes >= 5 && toc.length >= 3;
+const recommendations = getPublicPosts(await getCollection('essays'), now)
+  .filter(post => post.id !== essay.id)
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
+  .slice(0, 2);
 ---
-
-<Base title={`${essay.data.title} — Gio Rogers`} description={essay.data.description}>
-  <article class="prose">
-    <div class="mono-label" style="display:block; margin-top:48px;">
-      {
-        [
-          formatDate(essay.data.date),
-          `${readingTime(essay.body ?? '')} min read`,
-          ...essay.data.tags,
-        ].join(' · ')
-      }
-    </div>
-    <h1>{essay.data.title}</h1>
-    <Content />
+<Base title={`${essay.data.title} — Gio Rogers`} description={essay.data.description}
+  noindex={essay.data.archived || preview} published={essay.data.date} updated={essay.data.updated}>
+  <article class="article">
+    <header class="article-header">
+      {essay.data.archived && <p class="publication-notice"><strong>Archived</strong> · Kept here at its original address, outside the public writing list.</p>}
+      {preview && <p class="publication-notice"><strong>{essay.data.draft ? 'Draft preview' : 'Scheduled preview'}</strong> · {essay.data.draft ? 'This post is not published.' : `Publication date: ${formatDate(essay.data.date)}.`} Visible only in local development.</p>}
+      <div class="post-meta article-meta">
+        <span>{essay.data.format}</span>
+        <time datetime={essay.data.date.toISOString()}>{formatDate(essay.data.date)}</time>
+        <span>{minutes} min read</span>
+      </div>
+      <h1>{essay.data.title}</h1>
+      <p class="article-description">{essay.data.description}</p>
+      {essay.data.updated && <p class="updated-date">Updated <time datetime={essay.data.updated.toISOString()}>{formatDate(essay.data.updated)}</time></p>}
+      {essay.data.tags.length > 0 && <p class="article-tags">{essay.data.tags.join(' · ')}</p>}
+    </header>
+    {showToc && (
+      <details class="table-of-contents">
+        <summary>In this article <span class="toc-count">{toc.length} sections</span></summary>
+        <nav aria-label="Table of contents">
+          <ul>{toc.map(heading => <li class:list={{ 'toc-subheading': heading.depth === 3 }}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ul>
+        </nav>
+      </details>
+    )}
+    <div class="prose article-body"><Content /></div>
   </article>
+  {recommendations.length > 0 && (
+    <section class="keep-reading" aria-labelledby="keep-reading">
+      <div class="section-heading">
+        <h2 class="section-label" id="keep-reading">Keep reading</h2>
+        <a class="mono-link" href="/#writing">All writing <span aria-hidden="true">↗</span></a>
+      </div>
+      <ul class="essay-list">{recommendations.map(post => <li><PostPreview post={post} /></li>)}</ul>
+    </section>
+  )}
 </Base>

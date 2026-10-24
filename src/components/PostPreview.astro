@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, readingTime } from '../lib/format';
+interface Props { post: CollectionEntry<'essays'>; }
+const { post } = Astro.props;
+const tags = post.data.tags.filter(tag => tag !== 'blog post');
+const hasLiteraryFormat = post.data.format === 'essay' && tags.some(tag => tag === 'fiction' || tag === 'art essay');
+const labels = [...new Set(hasLiteraryFormat ? tags : [post.data.format, ...tags])];
+---
+<div class="post-preview">
+  <h3 class="post-title"><a href={`/essays/${post.id}/`}>{post.data.title}</a></h3>
+  <p class="post-description">{post.data.description}</p>
+  <div class="post-meta">
+    <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+    <span>{readingTime(post.body ?? '')} min read</span>
+    <span>{labels.join(' · ')}</span>
+  </div>
+</div>
