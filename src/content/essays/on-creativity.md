@@ -3,7 +3,7 @@ title: "On creativity"
 date: 2025-08-18
 description: "What makes an idea new? A short argument about creativity as making implicit information explicit, worked through in Python."
 tags: ["creativity", "ideas"]
-featured: true
+featured: false
 ---
 
 
